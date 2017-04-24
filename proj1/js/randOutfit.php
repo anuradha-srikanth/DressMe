@@ -2,7 +2,7 @@
 //echo "<script> console.log('hello'); </script>";
 //echo 'hello';
 //print_r($_POST);
-if(isset($_POST['categoryName'])){
+if(isset($_POST['subCatName'])){
 //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
   $host = "sis-teach-01.sis.pitt.edu"; 
@@ -19,8 +19,12 @@ if(isset($_POST['categoryName'])){
       " (" . mysqli_connect_errno(). ")"
       );
   }else{
-    $show_subcategories = 'SELECT * FROM Category_top';//+ $_POST['categoryName'];
-    $result1 = mysqli_query($connection, $show_subcategories);
+    // print_r($_POST['categoryName']);
+    // print_r("\n");
+    $show_outfit = 'SELECT * FROM ';
+    $show_outfit .= $_POST['subCatName'];
+    //print_r($show_subcategories);
+    $result1 = mysqli_query($connection, $show_outfit);
     if(!$result1){
       die("Database query failed: Show categories");
     }else{

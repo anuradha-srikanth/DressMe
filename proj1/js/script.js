@@ -5,7 +5,7 @@
 /* This function fires as soon as the index page loads. It will listen for
  * key events and process them accordingly. 
  */
-$(function(){
+ $(function(){
   //document.cookie = 'user = "ANu"';
   $("#location").submit(function(){
     event.preventDefault();
@@ -13,7 +13,7 @@ $(function(){
     var state = $("#state").val();
     //weather is an array of different weather conditions 
     var weather = getWeather(city,state);
-    var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+    var allCategories = ['Category_top'];//['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
     for (var i=0; i<allCategories.length; i++){
       //randomly picks a subcategory out of category
       var subCat = pickSubCategories(allCategories[i]);
@@ -32,25 +32,49 @@ $(function(){
 
 
 
+
+
 /* 
  * pickSubCategories - This function takes in a category and  randomly picks a
  *                     subcategory within it. 
  */
-function pickSubCategories(category){
-var request = $.ajax({
-  url: "js/script.js.php",
-  type: "post",
-  data: category
-}).done(function(results){
-  console.log("success");
-  $('.divThat').html(results);
-}).fail(function(){
-  console.log("ERROR");
-})
+ function pickSubCategories(categoryName){
+  var request = $.ajax({
+    url: "js/randSubcategory.php",
+    type: "post",
+    data: {categoryName: categoryName}
+  }).done(function(results){
+    //console.log(results);
+    //document.getElementById("divThat").innerHTML = results;
+    //$('.divThat').html(results);
+    return results;
+  }).fail(function(){
+    console.log("ERROR");
+  })
+
+// $.ajax({
+//     url: "js/script.js.php",
+//     type: "post",
+//     data: category,
+//     success: function()
+
+//   })
+
 }
 
 function pickOutfit(subCategory){
- // console.log(subCategory);
+    var request = $.ajax({
+    url: "js/randOutfit.php",
+    type: "post",
+    data: {categoryName: categoryName}
+  }).done(function(results){
+    //console.log(results);
+    //document.getElementById("divThat").innerHTML = results;
+    //$('.divThat').html(results);
+    return results;
+  }).fail(function(){
+    console.log("ERROR");
+  })
 }
 
 function showArticle(array, article){
@@ -145,10 +169,10 @@ var showResult = function(question){
  *               api call. It also appends the results of this random selection
  **              to the 
  */
-var getArticles = function(category) {
+ var getArticles = function(category) {
 
 //you get the category 
-    $.ajax({
+$.ajax({
       url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + category + "&offset=0&limit=10",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
       dataType : "json",
       // success : function(\arsed_json) {
@@ -160,18 +184,18 @@ var getArticles = function(category) {
       //     document.getElementById("also").innerHTML = "<img src='" + img + "' </img>";
 
       //   }
-      })
+    })
   .done(function(result){ //this waits for the ajax to return with a succesful promise object
-             
-            var searchResults = showResult(result)
-              console.log(result);
-          var img =  result['products'][0]['image']['sizes']['Original']['url'];
+
+    var searchResults = showResult(result)
+    console.log(result);
+    var img =  result['products'][0]['image']['sizes']['Original']['url'];
           //document.getElementById("also").innerHTML = "<img src='" + img + "' </img>";
 
 
-    
 
-    $('.results').html(searchResults);
+
+          $('.results').html(searchResults);
     //$.each is a higher order function. It takes an array and a function as an argument.
     //The function is executed once for each item in the array.
     $.each(result.items, function(i, item) {

@@ -19,7 +19,11 @@ if(isset($_POST['categoryName'])){
       " (" . mysqli_connect_errno(). ")"
       );
   }else{
-    $show_subcategories = 'SELECT * FROM Category_top';//+ $_POST['categoryName'];
+    // print_r($_POST['categoryName']);
+    // print_r("\n");
+    $show_subcategories = 'SELECT * FROM ';
+    $show_subcategories .= $_POST['categoryName'];
+    //print_r($show_subcategories);
     $result1 = mysqli_query($connection, $show_subcategories);
     if(!$result1){
       die("Database query failed: Show categories");
