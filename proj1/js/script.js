@@ -2,89 +2,6 @@
 
 
 
-
-
-/* 
- * pickSubCategories - This function takes in a category and  randomly picks a
- *                     subcategory within it. 
- */
- function pickSubCategories(categoryName){
-  var request = $.ajax({
-    //async: false, 
-    url: "js/randSubcategory.php",
-    type: "post",
-    data: {categoryName: categoryName}
-  }).done(function(results){
-    //console.log("oooo");
-    console.log(typeof (JSON.parse(results)).name);
-    document.getElementById("divThat").innerHTML = JSON.parse(results).name;
-    //$('.divThat').html(results);
-
-    //return (JSON.parse(results)).name;//results['name'];
-  }).fail(function(){
-    console.log("ERROR");
-    //return 'null';
-  });
-  return (JSON.parse(results)).name;
-// $.ajax({
-//     url: "js/script.js.php",
-//     type: "post",
-//     data: category,
-//     success: function()
-
-//   })
-
-}
-
-function pickOutfit(subCategory){
-  //   var request = $.ajax({
-  //   url: "js/randOutfit.php",
-  //   type: "post",
-  //   data: {subCatName: subCategory}
-  // }).done(function(results){
-  //   console.log(results);
-  //   //document.getElementById("divThat").innerHTML = results;
-  //   //$('.divThat').html(results);
-  //   return results;
-  // }).fail(function(){
-  //   console.log("ERROR");
-  // })
-  console.log(subCategory);
-  var subCat = subCategory.toLowerCase();
-  $.ajax({
-      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=30",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
-      dataType : "json",
-      success : function(parsed_json) {
-          // var location = parsed_json['location']['city'];
-          // var temp_f = parsed_json['current_observation']['temp_f'];
-          // alert("Current temperature in " + location + " is: " + temp_f);
-          // console.log(parsed_json);
-          // var img =  parsed_json['products'][0]['image']['sizes']['Original']['url'];
-          // document.getElementById("also").innerHTML = "<img src='" + img + "' </img>"
-
-          console.log(parsed_json);
-        }
-      });
-}
-
-function showArticle(array, article){
- // console.log(1);
-}
-
-function showResults(results){
-  var html = "";
-  $.each(results, function(index,value){
-    html += '<p>' + value.Title + '</p>';
-    console.log(value.Title);
-  });
-  $('#search-results').html(html);
-}
-
-
-
-
-
-
 /* This function fires as soon as the index page loads. It will listen for
  * key events and process them accordingly. 
  */
@@ -99,22 +16,104 @@ function showResults(results){
     var allCategories = ['Category_top'];//['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
     for (var i=0; i<allCategories.length; i++){
       console.log(i);
+      var results_array = [];
       //randomly picks a subcategory out of category
-      var subCat = (pickSubCategories(allCategories[i]));
+      var subCat = (pickSubCategories(results_array, allCategories[i]));
       //randomly picks an article out of chosen subcategory
-      console.log(subCat);
+      //console.log(subCat);
       //var article = pickOutfit(subCat);
 
       //appends the article 
-      var results_array = [];
-      var show = showArticle(results_array, article);
-      if(!show){
-        console.log("choice failure");
-      }
+      // var show = showArticle(results_array, article);
+      // if(!show){
+      //   console.log("choice failure");
+      // }
     }
   });
 
 });
+
+
+/* 
+ * pickSubCategories - This function takes in a category and  randomly picks a
+ *                     subcategory within it. 
+ */
+ function pickSubCategories(results_array, categoryName){
+  var request = $.ajax({
+    //async: false, 
+    url: "js/randSubcategory.php",
+    type: "post",
+    data: {categoryName: categoryName}
+  }).done(function(results){
+    //console.log("oooo");
+    console.log(typeof (JSON.parse(results)).name);
+    document.getElementById("divThat").innerHTML = JSON.parse(results).name;
+    //$('.divThat').html(results);
+
+    //return (JSON.parse(results)).name;//results['name'];
+    pickOutfit(results_array, (JSON.parse(results)).name);
+  }).fail(function(){
+    console.log("ERROR");
+    //return 'null';
+  });
+  //return (JSON.parse(results)).name;
+// $.ajax({
+//     url: "js/script.js.php",
+//     type: "post",
+//     data: category,
+//     success: function()
+
+//   })
+
+}
+
+function pickOutfit(array, subCategory){
+  //   var request = $.ajax({
+  //   url: "js/randOutfit.php",
+  //   type: "post",
+  //   data: {subCatName: subCategory}
+  // }).done(function(results){
+  //   console.log(results);
+  //   //document.getElementById("divThat").innerHTML = results;
+  //   //$('.divThat').html(results);
+  //   return results;
+  // }).fail(function(){
+  //   console.log("ERROR");
+  // })
+  var subCat = subCategory.toLowerCase();
+  $.ajax({
+      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=30",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
+      dataType : "json",
+      success : function(article) {
+          // var location = parsed_json['location']['city'];
+          // var temp_f = parsed_json['current_observation']['temp_f'];
+          // alert("Current temperature in " + location + " is: " + temp_f);
+          // cojhhnsole.log(parsed_json);
+          // var img =  parsed_json['products'][0]['image']['sizes']['Original']['url'];
+          // document.getElementById("also").innerHTML = "<img src='" + img + "' </img>"
+
+          console.log(article);
+          showArticle(array, article);
+
+        }
+      });
+}
+
+function showArticle(array, article){
+// console.log(1);
+console.log(article);
+}
+
+function showResults(results){
+  var html = "";
+  $.each(results, function(index,value){
+    html += '<p>' + value.Title + '</p>';
+    console.log(value.Title);
+  });
+  $('#search-results').html(html);
+}
+
+
 
 
 /*
