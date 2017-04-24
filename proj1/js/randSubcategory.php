@@ -28,12 +28,7 @@ if(isset($_POST['categoryName'])){
     if(!$result1){
       die("Database query failed: Show categories");
     }else{
-      // $rand = rand(0,count($result1['num_rows']));
-      // //echo($result1[$rand]);
-      // print_r($result1['num_rows']);
-      // print('\n');
-      // //return $result1[$rand];
-      //for($rand = rand(0,))
+
       $resultsArray = [];
       while($row1 = mysqli_fetch_assoc($result1)){
         //print_r(gettype($row1));

@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-
+  <?php if(!(isset($_SESSION['login']) && ($_SESSION['login'] == true))){
+    echo 'Please Login before you can access this information';
+    echo '<a href="login.php"> </a>';
+}else{
+//echo out all of the following:
+}
+?>
 
     <div class="off-canvas-wrapper">
       <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
@@ -37,7 +43,7 @@
   </div>
 </div>
 <div class="row small-up-2 medium-up-3 large-up-4">
-<?php
+    <?php
 //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
     $host = "sis-teach-01.sis.pitt.edu"; 
@@ -54,13 +60,25 @@
             " (" . mysqli_connect_errno(). ")"
             );
     }else{
-        echo  '<div class="column">';
-        echo '<img class="thumbnail" src="http://placehold.it/550x550">';
-        echo '<h5>My Site</h5>';
-        echo '</div>';
+
+        $outfits = 'SELECT * FROM Outfit';
+        $result1 = mysqli_query($connection, $outfits);
+        if(!$result1){
+            die("Database query failed: Show outfits");
+        }else{
+            while($row1 = mysqli_fetch_assoc($result1)){
+
+                echo  '<div class="column">';
+                echo '<a href="my_outfit.php">';
+                echo '<img class="thumbnail" src="http://placehold.it/550x550">';
+                echo '</a>';
+                echo '<h5>My Site</h5>';
+                echo '</div>';
+            }
+        }
     }
 
-?>
+    ?>
 <!--     <div class="column">
       <img class="thumbnail" src="http://placehold.it/550x550">
       <h5>My Site</h5>
@@ -147,7 +165,7 @@
 <script src="js/vendor/what-input.js"></script>
 <script src="js/vendor/foundation.js"></script>
 <script src="js/app.js"></script>
-<script src="js/login-processing.js"></script>
+
 
 
 </body>

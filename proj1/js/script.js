@@ -1,6 +1,8 @@
 
 
-
+var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+var resultsArray = '';
+var weatherArray = [];
 
 /* This function fires as soon as the index page loads. It will listen for
  * key events and process them accordingly. 
@@ -13,39 +15,54 @@
     var state = $("#state").val();
     //weather is an array of different weather conditions 
     var weather = getWeather(city,state);
-    var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
-    for (var i=0; i<allCategories.length; i++){
-      //console.log(i);
-      var results_array = '';
-      //randomly picks a subcategory out of category
-      var subCat = (pickSubCategories(results_array, allCategories[i]));
-      //randomly picks an article out of chosen subcategory
-      //console.log(subCat);
-      //var article = pickOutfit(subCat);
-
-      //appends the article 
-      // var show = showArticle(results_array, article);
-      // if(!show){
-      //   console.log("choice failure");
-      // }
-    }
+    
+    // for (var i=0; i<allCategories.length; i++){
+    //   //randomly picks a subcategory out of category
+    //   var subCat = (pickSubCategories(resultsArray, allCategories[i]));
+    //   //randomly picks an article out of chosen subcategory
+    // }
   });
 
 });
 
-function getWeather(city,state){
+ function getWeather(city,state){
   var state1 = encodeURIComponent(state);
   var city1 = encodeURIComponent(city);
   $.ajax({
     url : "http://api.wunderground.com/api/e1a14a833d1ce535/geolookup/conditions/q/" + state1+ "/" + city1 +".json",
     dataType : "jsonp",
-    success : function(parsed_json) {
-      var location = parsed_json['location']['city'];
-      var temp_f = parsed_json['current_observation']['temp_f'];
-      alert("Current temperature in " + location + " is: " + temp_f);
-      console.log(parsed_json);
+    success : function(weather) {
+      //var weatherArray = array('location'=>)
+      // var weatherArray = [];
+      weatherArray
+      var location = weather['location']['city'];
+      var temperature = weather['current_observation']['temp_f'];
+      var feelslike = weather['current_observation']['feelslike_f'];
+      weatherArray.push(location); //at index 0
+      weatherArray.push(temperature); //at index 1
+      weatherArray.push(feelslike); //at index 2
+
+      var precipBool = !!(weather['current_observation']['precip_today']);
+      var weatherString = weather['current_observation']['weather'];
+      if(precipBool || weatherString.toLowerCase().includes("rain")){
+        var rainBool = true;
+      }else{
+        var rainBool = false;
+      }if(precipBool || weatherString.toLowerCase().includes("snow")){
+        var snowBool = true;
+      }else{
+        var snowBool = false;
+      }
+      weatherArray.push(rainBool); //at index 3
+      weatherArray.push(snowBool); //at index 4
+
+      for (var i=0; i<allCategories.length; i++){
+      //randomly picks a subcategory out of category
+      var subCat = (pickSubCategories(weatherArray, resultsArray, allCategories[i]));
     }
-  });
+
+  }
+});
 
 }
 
@@ -54,17 +71,18 @@ function getWeather(city,state){
  * pickSubCategories - This function takes in a category and  randomly picks a
  *                     subcategory within it. 
  */
- function pickSubCategories(results_array, categoryName){
+ function pickSubCategories(weatherArray, resultsArray, category_name){
   console.log('1');
   var request = $.ajax({
     //async: false, 
     //dataType: 'json',
     url: "js/randSubcategory.php",
     type: "post",
-    data: {categoryName: categoryName}
+    data: {categoryName: category_name,
+           weather: weatherArray}
   }).done(function(results){
     var jsonString =  (JSON.parse(results)).name;
-    pickOutfit(results_array, jsonString);
+    pickOutfit(resultsArray, jsonString);
 
   }).fail(function(){
     console.log("ERROR");
@@ -100,6 +118,7 @@ function pickOutfit(array, subCategory){
           var length = article.products.length;
           var rand = Math.floor(Math.random()*10)%(length-1);
           //console.log(rand);
+
           showArticle(array, article.products[rand]);
 
         }
