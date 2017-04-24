@@ -35,9 +35,8 @@ if(isset($_POST['categoryName'])){
         array_push($resultsArray, $row1);
       }
       $rand = rand(0,count($resultsArray)-1);
-      //print_r($resultsArray[$rand]);
-      //echo json_encode($resultsArray[$rand]);
-     // print_r(gettype(json_encode(($resultsArray[$rand]))));
+
+      //this line returns an object
       echo json_encode(($resultsArray[$rand]));
     }
   }

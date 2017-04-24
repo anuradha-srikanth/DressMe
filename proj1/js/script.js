@@ -45,13 +45,13 @@ var weatherArray = [];
       var precipBool = !!(weather['current_observation']['precip_today']);
       var weatherString = weather['current_observation']['weather'];
       if(precipBool || weatherString.toLowerCase().includes("rain")){
-        var rainBool = true;
+        var rainBool = 'true';
       }else{
-        var rainBool = false;
+        var rainBool = 'false';
       }if(precipBool || weatherString.toLowerCase().includes("snow")){
-        var snowBool = true;
+        var snowBool = 'true';
       }else{
-        var snowBool = false;
+        var snowBool = 'false';
       }
       weatherArray.push(rainBool); //at index 3
       weatherArray.push(snowBool); //at index 4
@@ -79,8 +79,12 @@ var weatherArray = [];
     url: "js/randSubcategory.php",
     type: "post",
     data: {categoryName: category_name,
-           weather: weatherArray}
+           tempFeelsLike: weatherArray[2],
+           rainBool: weatherArray[3],
+           snowBool: weatherArray[4]}
   }).done(function(results){
+    console.log(results);
+    console.log(typeof JSON.parse(results));
     var jsonString =  (JSON.parse(results)).name;
     pickOutfit(resultsArray, jsonString);
 
