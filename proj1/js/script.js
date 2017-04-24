@@ -13,9 +13,9 @@
     var state = $("#state").val();
     //weather is an array of different weather conditions 
     var weather = getWeather(city,state);
-    var allCategories = ['Category_top'];//['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+    var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
     for (var i=0; i<allCategories.length; i++){
-      console.log(i);
+      //console.log(i);
       var results_array = [];
       //randomly picks a subcategory out of category
       var subCat = (pickSubCategories(results_array, allCategories[i]));
@@ -39,19 +39,21 @@
  *                     subcategory within it. 
  */
  function pickSubCategories(results_array, categoryName){
+  console.log('1');
   var request = $.ajax({
     //async: false, 
+    //dataType: 'json',
     url: "js/randSubcategory.php",
     type: "post",
     data: {categoryName: categoryName}
   }).done(function(results){
     //console.log("oooo");
-    console.log(typeof (JSON.parse(results)).name);
-    document.getElementById("divThat").innerHTML = JSON.parse(results).name;
+    //console.log(typeof (JSON.parse(results)).name);
+    //document.getElementById("divThat").innerHTML = results;//(JSON.parse(results)).name;
     //$('.divThat').html(results);
-
     //return (JSON.parse(results)).name;//results['name'];
-    pickOutfit(results_array, (JSON.parse(results)).name);
+    var jsonString =  (JSON.parse(results)).name;
+    pickOutfit(results_array, jsonString);
   }).fail(function(){
     console.log("ERROR");
     //return 'null';
@@ -91,9 +93,10 @@ function pickOutfit(array, subCategory){
           // cojhhnsole.log(parsed_json);
           // var img =  parsed_json['products'][0]['image']['sizes']['Original']['url'];
           // document.getElementById("also").innerHTML = "<img src='" + img + "' </img>"
-
-          console.log(article);
-          showArticle(array, article);
+          var length = article.products.length;
+          var rand = Math.floor(Math.random()*10)%(length-1);
+          //console.log(rand);
+          showArticle(array, article.products[rand]);
 
         }
       });

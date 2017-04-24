@@ -19,7 +19,7 @@ if(isset($_POST['categoryName'])){
       " (" . mysqli_connect_errno(). ")"
       );
   }else{
-    // print_r($_POST['categoryName']);
+    //print_r($_POST['categoryName']);
     // print_r("\n");
     $show_subcategories = 'SELECT * FROM ';
     $show_subcategories .= $_POST['categoryName'];
@@ -39,7 +39,7 @@ if(isset($_POST['categoryName'])){
         //print_r(gettype($row1));
         array_push($resultsArray, $row1);
       }
-      $rand = rand(0,count($resultsArray));
+      $rand = rand(0,count($resultsArray)-1);
       //print_r($resultsArray[$rand]);
       //echo json_encode($resultsArray[$rand]);
      // print_r(gettype(json_encode(($resultsArray[$rand]))));
