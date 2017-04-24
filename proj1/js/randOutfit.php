@@ -41,7 +41,7 @@ if(isset($_POST['subCatName'])){
       $rand = rand(0,count($resultsArray));
       //print_r($resultsArray[$rand]);
       //echo json_encode($resultsArray[$rand]);
-      echo json_encode($resultsArray[$rand]);
+      echo 'var jsArray = '.($resultsArray[$rand]). ';\n';
     }
   }
 

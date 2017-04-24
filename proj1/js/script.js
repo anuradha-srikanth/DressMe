@@ -2,36 +2,6 @@
 
 
 
-/* This function fires as soon as the index page loads. It will listen for
- * key events and process them accordingly. 
- */
- $(function(){
-  //document.cookie = 'user = "ANu"';
-  $("#location").submit(function(){
-    event.preventDefault();
-    var city = $("#city").val();
-    var state = $("#state").val();
-    //weather is an array of different weather conditions 
-    var weather = getWeather(city,state);
-    var allCategories = ['Category_top'];//['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
-    for (var i=0; i<allCategories.length; i++){
-      //randomly picks a subcategory out of category
-      var subCat = pickSubCategories(allCategories[i]);
-      //randomly picks an article out of chosen subcategory
-      var article = pickOutfit(subCat);
-      //appends the article 
-      var results_array = [];
-      var show = showArticle(results_array, article);
-      if(!show){
-        console.log("choice failure");
-      }
-    }
-  });
-
-});
-
-
-
 
 
 /* 
@@ -40,18 +10,22 @@
  */
  function pickSubCategories(categoryName){
   var request = $.ajax({
+    //async: false, 
     url: "js/randSubcategory.php",
     type: "post",
     data: {categoryName: categoryName}
   }).done(function(results){
-    //console.log(results);
-    //document.getElementById("divThat").innerHTML = results;
+    //console.log("oooo");
+    console.log(typeof (JSON.parse(results)).name);
+    document.getElementById("divThat").innerHTML = JSON.parse(results).name;
     //$('.divThat').html(results);
-    return results;
+
+    //return (JSON.parse(results)).name;//results['name'];
   }).fail(function(){
     console.log("ERROR");
-  })
-
+    //return 'null';
+  });
+  return (JSON.parse(results)).name;
 // $.ajax({
 //     url: "js/script.js.php",
 //     type: "post",
@@ -63,18 +37,34 @@
 }
 
 function pickOutfit(subCategory){
-    var request = $.ajax({
-    url: "js/randOutfit.php",
-    type: "post",
-    data: {categoryName: categoryName}
-  }).done(function(results){
-    //console.log(results);
-    //document.getElementById("divThat").innerHTML = results;
-    //$('.divThat').html(results);
-    return results;
-  }).fail(function(){
-    console.log("ERROR");
-  })
+  //   var request = $.ajax({
+  //   url: "js/randOutfit.php",
+  //   type: "post",
+  //   data: {subCatName: subCategory}
+  // }).done(function(results){
+  //   console.log(results);
+  //   //document.getElementById("divThat").innerHTML = results;
+  //   //$('.divThat').html(results);
+  //   return results;
+  // }).fail(function(){
+  //   console.log("ERROR");
+  // })
+  console.log(subCategory);
+  var subCat = subCategory.toLowerCase();
+  $.ajax({
+      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=30",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
+      dataType : "json",
+      success : function(parsed_json) {
+          // var location = parsed_json['location']['city'];
+          // var temp_f = parsed_json['current_observation']['temp_f'];
+          // alert("Current temperature in " + location + " is: " + temp_f);
+          // console.log(parsed_json);
+          // var img =  parsed_json['products'][0]['image']['sizes']['Original']['url'];
+          // document.getElementById("also").innerHTML = "<img src='" + img + "' </img>"
+
+          console.log(parsed_json);
+        }
+      });
 }
 
 function showArticle(array, article){
@@ -89,6 +79,44 @@ function showResults(results){
   });
   $('#search-results').html(html);
 }
+
+
+
+
+
+
+/* This function fires as soon as the index page loads. It will listen for
+ * key events and process them accordingly. 
+ */
+ $(function(){
+  //document.cookie = 'user = "ANu"';
+  $("#location").submit(function(){
+    event.preventDefault();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    //weather is an array of different weather conditions 
+    var weather = getWeather(city,state);
+    var allCategories = ['Category_top'];//['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+    for (var i=0; i<allCategories.length; i++){
+      console.log(i);
+      //randomly picks a subcategory out of category
+      var subCat = (pickSubCategories(allCategories[i]));
+      //randomly picks an article out of chosen subcategory
+      console.log(subCat);
+      //var article = pickOutfit(subCat);
+
+      //appends the article 
+      var results_array = [];
+      var show = showArticle(results_array, article);
+      if(!show){
+        console.log("choice failure");
+      }
+    }
+  });
+
+});
+
+
 /*
 function getRequest(searchRequest){
     var params = {

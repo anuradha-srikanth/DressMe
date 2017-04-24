@@ -36,12 +36,14 @@ if(isset($_POST['categoryName'])){
       //for($rand = rand(0,))
       $resultsArray = [];
       while($row1 = mysqli_fetch_assoc($result1)){
+        //print_r(gettype($row1));
         array_push($resultsArray, $row1);
       }
       $rand = rand(0,count($resultsArray));
       //print_r($resultsArray[$rand]);
       //echo json_encode($resultsArray[$rand]);
-      echo json_encode($resultsArray[$rand]);
+     // print_r(gettype(json_encode(($resultsArray[$rand]))));
+      echo json_encode(($resultsArray[$rand]));
     }
   }
 
