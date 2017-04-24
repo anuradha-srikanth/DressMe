@@ -16,7 +16,7 @@
     var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
     for (var i=0; i<allCategories.length; i++){
       //console.log(i);
-      var results_array = [];
+      var results_array = '';
       //randomly picks a subcategory out of category
       var subCat = (pickSubCategories(results_array, allCategories[i]));
       //randomly picks an article out of chosen subcategory
@@ -33,6 +33,22 @@
 
 });
 
+function getWeather(city,state){
+  var state1 = encodeURIComponent(state);
+  var city1 = encodeURIComponent(city);
+  $.ajax({
+    url : "http://api.wunderground.com/api/e1a14a833d1ce535/geolookup/conditions/q/" + state1+ "/" + city1 +".json",
+    dataType : "jsonp",
+    success : function(parsed_json) {
+      var location = parsed_json['location']['city'];
+      var temp_f = parsed_json['current_observation']['temp_f'];
+      alert("Current temperature in " + location + " is: " + temp_f);
+      console.log(parsed_json);
+    }
+  });
+
+}
+
 
 /* 
  * pickSubCategories - This function takes in a category and  randomly picks a
@@ -47,25 +63,13 @@
     type: "post",
     data: {categoryName: categoryName}
   }).done(function(results){
-    //console.log("oooo");
-    //console.log(typeof (JSON.parse(results)).name);
-    //document.getElementById("divThat").innerHTML = results;//(JSON.parse(results)).name;
-    //$('.divThat').html(results);
-    //return (JSON.parse(results)).name;//results['name'];
     var jsonString =  (JSON.parse(results)).name;
     pickOutfit(results_array, jsonString);
+
   }).fail(function(){
     console.log("ERROR");
     //return 'null';
   });
-  //return (JSON.parse(results)).name;
-// $.ajax({
-//     url: "js/script.js.php",
-//     type: "post",
-//     data: category,
-//     success: function()
-
-//   })
 
 }
 
@@ -105,6 +109,10 @@ function pickOutfit(array, subCategory){
 function showArticle(array, article){
 // console.log(1);
 console.log(article);
+var temp = "<img src='" + article.image.sizes.IPhoneSmall.url +"'>"
+//array.push(temp);
+array += temp;
+//return temp;
 }
 
 function showResults(results){
@@ -165,23 +173,6 @@ function getOutfits(x){
 
 }
 
-
-
-function getWeather(city,state){
-  var state1 = encodeURIComponent(state);
-  var city1 = encodeURIComponent(city);
-  $.ajax({
-    url : "http://api.wunderground.com/api/e1a14a833d1ce535/geolookup/conditions/q/" + state1+ "/" + city1 +".json",
-    dataType : "jsonp",
-    success : function(parsed_json) {
-      var location = parsed_json['location']['city'];
-      var temp_f = parsed_json['current_observation']['temp_f'];
-      alert("Current temperature in " + location + " is: " + temp_f);
-      console.log(parsed_json);
-    }
-  });
-
-}
 
 //http://api.shopstyle.com/api/v2/categories?pid=YOUR_API_KEY
 

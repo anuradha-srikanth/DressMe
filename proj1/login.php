@@ -44,7 +44,7 @@
                         Remember me
                     </div>
                     <div class="large-12 columns">
-                        <a href="index.php" type="submit" name="existingUser"class="button expand large">Login</a>
+                        <a href="search.php" type="submit" name="existingUser"class="button expand large">Login</a>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         </label>
                     </div>
                     <div class="large-12 columns">
-                        <a href="index.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
+                        <a href="search.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                 $result = mysqli_fetch_assoc($userquery);
                 $_SESSION['userID'] = $result['userID'];
                 $_SESSION['login'] = true;
-                header('Location: index.php');
+                header('Location: search.php');
             }
         }
     }
