@@ -23,6 +23,11 @@ if(isset($_POST['categoryName'])){
     // print_r("\n");
     $show_subcategories = 'SELECT * FROM ';
     $show_subcategories .= $_POST['categoryName'];
+    $show_subcategories .= ' WHERE ';
+    $show_subcategories .= (int)$_POST['tempFeelsLike'];
+    $show_subcategories .= ' > (temp_low) AND ';
+    $show_subcategories .= (int)$_POST['tempFeelsLike'];
+    $show_subcategories .= ' < temp_high';
     //print_r($show_subcategories);
     $result1 = mysqli_query($connection, $show_subcategories);
     if(!$result1){
@@ -38,6 +43,7 @@ if(isset($_POST['categoryName'])){
 
       //this line returns an object
       echo json_encode(($resultsArray[$rand]));
+
     }
   }
 
