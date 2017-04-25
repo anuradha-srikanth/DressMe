@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+
     <form class="medium-4 medium-offset-4 columns" action="login.php" method="post">
         <div class="row">
             <div class="large-12 columns">
@@ -83,7 +84,6 @@
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/login-processing.js"></script>
 
     <?php
 

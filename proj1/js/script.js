@@ -1,7 +1,6 @@
 
-var allCategories = ['Category_top', 'Category_bottom', 'Category_shoes', 'Category_accessories' ];
-
-//var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+//var allCategories = ['Category_top', 'Category_bottom', 'Category_shoes'];
+var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
 var resultsArray = '';
 var weatherArray = [];
 
@@ -66,23 +65,24 @@ var weatherArray = [];
  * pickSubCategories - This function takes in a category and  randomly picks a
  *                     subcategory within it. 
  */
- function pickSubCategories(weatherArray, resultsArray, category_name){
+ function pickSubCategories(weatherArray, resultsArray, categoryName){
   var request = $.ajax({
     //async: false, 
     //dataType: 'json',
     url: "js/randSubcategory.php",
     type: "post",
-    data: {categoryName: category_name,
-           tempFeelsLike: weatherArray[2],
-           rainBool: weatherArray[3],
-           snowBool: weatherArray[4]}
-  }).done(function(results){
+    data: {categoryName: categoryName,
+     tempFeelsLike: weatherArray[2],
+     rainBool: weatherArray[3],
+     snowBool: weatherArray[4]}
+   }).done(function(results){
    // console.log(results);
-    var jsonString =  (JSON.parse(results)).name;
-    pickOutfit(resultsArray, jsonString);
+   var jsonString =  (JSON.parse(results)).name;
+   console.log(categoryName);
+   pickOutfit(resultsArray, jsonString);
 
-  }).fail(function(){
-    console.log("ERROR");
+ }).fail(function(){
+  console.log("ERROR");
     //return 'null';
   });
 
@@ -92,34 +92,44 @@ function pickOutfit(array, subCategory){
 
   var subCat = subCategory.toLowerCase();
   $.ajax({
-      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=30",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
+      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=300",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
       dataType : "json",
       success : function(article) {
-          var length = article.products.length;
-          var rand = Math.floor(Math.random()*10)%(length-1);
+        var length = article.products.length;
+        var rand = Math.floor(Math.random()*10)%(length-1);
 
-          showArticle(array, article.products[rand]);
+        showArticle(array, article.products[rand]);
 
-        }
-      });
+      }
+    });
 }
 
 function showArticle(array, article){
 // console.log(1);
 console.log(article);
-var temp = "<img src='" + article.image.sizes.IPhoneSmall.url +"'>"
-//array.push(temp);
-array += temp;
+// var temp = "<img src='" + article.image.sizes.IPhoneSmall.url +"'>"
+// //array.push(temp);
+// array += temp;
 //return temp;
+var result = $('.templates .article .column').clone();
+console.log(result);
+var imgDiv = result.find('img');
+imgDiv.attr('src', article.image.sizes.Medium.url);
+result.find()
+//return result;
+//if($(".results").children().size() == 0){
+  // var wrapper = '<div class="row small-up-2 medium-up-3 large-up-4">';
+  // $('.results').append(wrapper);
+//}
+$('.results .row').append(result);
+//if($('.results .row').children().size() == 5){
+  // $('.results').append('</div>');
+//}
 }
 
 function showResults(results){
-  var html = "";
-  $.each(results, function(index,value){
-    html += '<p>' + value.Title + '</p>';
-    console.log(value.Title);
-  });
-  $('#search-results').html(html);
+
+  $('.results').append(article);
 }
 
 

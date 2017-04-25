@@ -48,13 +48,13 @@
 
 <div id="hide_form">
 
-<form id='location'>
-    <input name='location' id='city' type='textbox' placeholder='City'>
-    <input name='location' id='state' type='textbox' placeholder="State"> 
-    <button type='submit' id='sub' placeholder='SUBMIT' value='Submit'> </button>
+    <form id='location'>
+        <input name='location' id='city' type='textbox' placeholder='City'>
+        <input name='location' id='state' type='textbox' placeholder="State"> 
+        <button type='submit' id='sub' placeholder='SUBMIT' value='Submit'> </button>
 <!--     <div class="large-12 columns">
     <a href="my_outfit.php" type="submit" name="location" class="button expand large">Submit</a>
-    </div> -->
+</div> -->
 
 </form>
 
@@ -63,12 +63,27 @@
 </div> -->
 </div>
 
-<div id='results'>
-<!-- <p> 'hello' </p> -->
+<div class="templates hidden">
+    <div class="article">
+        <div class="column">
+          <img class="image" src="">
+          <h5>My Site</h5>
+      </div>
+  </div>
+  <div class="outfit">
+      <div class="row small-up-2 medium-up-3 large-up-4">
+      </div>
+  </div>
+</div>
+
+<div class='results'>
+<div class="row small-up-2 medium-up-3 large-up-4">
+    <!-- <p> 'hello' </p> -->
+    </div>
 </div>
 
 <div id='divThat'>
-<!-- <p> 'hello' </p> -->
+    <!-- <p> 'hello' </p> -->
 </div>
 
 <script>
