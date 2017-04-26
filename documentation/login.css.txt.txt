@@ -1,0 +1,44 @@
+#background-img{
+    background-color: #000;
+    background-image: url(login-wall.jpg);
+    background-repeat: no-repeat;
+    background-size: 65%;
+    display: block;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    height: 800px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1;
+}
+
+form{
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  /*font-family: Helvetica Neue, Helvetica, Arial, sans-serif;*/
+  /*top: 10px;*/
+  left: 0;
+  position: fixed;
+  /*margin-left: 20px;
+  margin-right: 20px;*/
+  right: 0;
+  z-index: 2;
+  /*padding: 0 10px;*/
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+/*font-family: 'Syncopate', sans-serif;*/
+}
+
+/*.top-bar-container{
+    position: absolute;
+}*/
+/*
+.top-bar{
+    color: #ec576b;
+}*/
+

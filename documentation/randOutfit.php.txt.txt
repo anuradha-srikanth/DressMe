@@ -1,14 +1,12 @@
-<?php session_start(); ?>
-
-<?php 
+<?php
 //echo "<script> console.log('hello'); </script>";
 //echo 'hello';
 //print_r($_POST);
-if(isset($_POST['categoryName'])){
+if(isset($_POST['subCatName'])){
 //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
   //$host = "sis-teach-01.sis.pitt.edu"; 
-   $host = "sis-teach-01.sis.pitt.edu"; 
+   $host = "localhost"; //"sis-teach-01.sis.pitt.edu"; 
     //Your Pitt username for the Pitt server and "root" for localhost
   $user = "asrikant";
     //Your password for the Pitt server and your password, if any, for localhost
@@ -22,31 +20,29 @@ if(isset($_POST['categoryName'])){
       " (" . mysqli_connect_errno(). ")"
       );
   }else{
-    //print_r($_POST['categoryName']);
+    // print_r($_POST['categoryName']);
     // print_r("\n");
-    $show_subcategories = 'SELECT * FROM ';
-    $show_subcategories .= $_POST['categoryName'];
-    $show_subcategories .= ' WHERE ';
-    $show_subcategories .= (int)$_POST['tempFeelsLike'];
-    $show_subcategories .= ' > (temp_low) AND ';
-    $show_subcategories .= (int)$_POST['tempFeelsLike'];
-    $show_subcategories .= ' < temp_high';
+    $show_outfit = 'SELECT * FROM ';
+    $show_outfit .= $_POST['subCatName'];
     //print_r($show_subcategories);
-    $result1 = mysqli_query($connection, $show_subcategories);
+    $result1 = mysqli_query($connection, $show_outfit);
     if(!$result1){
-      die("Database query failed: Show weather");
+      die("Database query failed: Show categories");
     }else{
-
+      // $rand = rand(0,count($result1['num_rows']));
+      // //echo($result1[$rand]);
+      // print_r($result1['num_rows']);
+      // print('\n');
+      // //return $result1[$rand];
+      //for($rand = rand(0,))
       $resultsArray = [];
       while($row1 = mysqli_fetch_assoc($result1)){
-        //print_r(gettype($row1));
         array_push($resultsArray, $row1);
       }
-      $rand = rand(0,count($resultsArray)-1);
-
-      //this line returns an object
-      echo json_encode(($resultsArray[$rand]));
-//echo json_encode(($resultsArray));
+      $rand = rand(0,count($resultsArray));
+      //print_r($resultsArray[$rand]);
+      //echo json_encode($resultsArray[$rand]);
+      echo 'var jsArray = '.($resultsArray[$rand]). ';\n';
     }
   }
 

@@ -65,8 +65,8 @@
   <?php 
 
 //echo $_GET['id'];
-
-  $host = "sis-teach-01.sis.pitt.edu"; 
+ $host = "sis-teach-01.sis.pitt.edu"; 
+  //$host = "sis-teach-01.sis.pitt.edu"; 
     //Your Pitt username for the Pitt server and "root" for localhost
   $user = "asrikant";
     //Your password for the Pitt server and your password, if any, for localhost

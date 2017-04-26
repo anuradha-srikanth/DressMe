@@ -1,24 +1,23 @@
-?>
 
-<!-- var allCategories = ['Category_top', 'Category_bottom', 'Category_shoes']; -->
+
 var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
 var resultsString = '';
 var weatherArray = [];
 var resultsArray = [];
 
-
+/* This function fires as soon as the index page loads. It will listen for
+ * key events and process them accordingly. 
+ */
  $(function(){
-  <!-- //document.cookie = 'user = "ANu"'; -->
   $("#location").submit(function(){
     event.preventDefault();
     var city = $("#city").val();
     var state = $("#state").val();
-    <!-- //weather is an array of different weather conditions  -->
+    //weather is an array of different weather conditions 
     getWeather(city,state);
   });
 
   $('.addOutfit').click(function(){
-    console.log("HELLOO");
     var request = $.ajax({
       url: "js/addOutfitToProfile.php",
       type: "post",
@@ -29,15 +28,13 @@ var resultsArray = [];
         art4: (resultsArray[3]).id,
         art5: (resultsArray[4]).id
       }
-     }).done(function(results){
-<!--    // console.log(results);
-   //var jsonString =  (JSON.parse(results));
-   //console.log(JSON.parse(results)); -->
+    }).done(function(results){
+
    console.log(results);
 
  }).fail(function(){
   console.log("ERROR");
-    <!-- //return 'null'; -->
+    //return 'null';
   });
 
 
@@ -52,15 +49,19 @@ var resultsArray = [];
     url : "http://api.wunderground.com/api/e1a14a833d1ce535/geolookup/conditions/q/" + state1+ "/" + city1 +".json",
     dataType : "jsonp",
     success : function(weather) {
-<!--       //var weatherArray = array('location'=>)
-      // var weatherArray = []; -->
+      //var weatherArray = array('location'=>)
+      // var weatherArray = [];
       //weatherArray
+      var out = "<p id='make_white'> The temperature in " + weather['location']['city'] + " is " + weather['current_observation']['temp_f'] + " but feels like " + weather['current_observation']['feelslike_f'] + "</p>";
+      $('.results .row').append(out);
       var location = weather['location']['city'];
       var temperature = weather['current_observation']['temp_f'];
       var feelslike = weather['current_observation']['feelslike_f'];
       weatherArray.push(location); //at index 0
       weatherArray.push(temperature); //at index 1
       weatherArray.push(feelslike); //at index 2
+
+
 
       var precipBool = !!(weather['current_observation']['precip_today']);
       var weatherString = weather['current_observation']['weather'];
@@ -76,8 +77,8 @@ var resultsArray = [];
       weatherArray.push(rainBool); //at index 3
       weatherArray.push(snowBool); //at index 4
 
-      for (var i=0; i < allCategories.length; i++){
-      <!-- randomly picks a subcategory out of category -->
+      for (var i=0; i<allCategories.length; i++){
+      //randomly picks a subcategory out of category
       pickSubCategories(weatherArray, resultsString, allCategories[i]);
     }
 
@@ -87,6 +88,10 @@ var resultsArray = [];
 }
 
 
+/* 
+ * pickSubCategories - This function takes in a category and  randomly picks a
+ *                     subcategory within it. 
+ */
  function pickSubCategories(weatherArray, resultsString, categoryName){
   var request = $.ajax({
     //async: false, 
@@ -133,13 +138,16 @@ function showArticle(array, article){
 
   var result = $('.templates .article .column').clone();
   var imgDiv = result.find('img');
-  imgDiv.attr('src', article.image.sizes.Medium.url);
-  result.find()
-  $('.results .row').append(result);
+  imgDiv.attr('src', article.image.sizes.XLarge.url);
+  //var name = result.find('p');
+//name.text = article.name;
+// result = result+ "<h5> "+article.name +"</h5>";
+$('.results .row').append(result);
 
-  if($('.addOutfit').hasClass("hidden")){
-    $('.addOutfit').removeClass("hidden");
-  }
+if($('.addOutfit').hasClass("hidden")){
+  $('.addOutfit').removeClass("hidden");
 }
+}
+
 
 
