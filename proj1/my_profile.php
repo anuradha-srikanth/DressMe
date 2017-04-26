@@ -12,7 +12,33 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+    <div class="top-bar-container" data-sticky-container>
+        <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
+          <div class="top-bar">
+            <div class="row column">
+              <div class="top-bar-left">
+                  <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li>
+                  </div>
+                  <div class="top-bar-right">
 
+                    <?php 
+
+                    if(isset($_SESSION['userID'])){
+                        echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
+        //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
+                        echo "</li> </ul>";
+        //echo ""
+                    }else{
+                        echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
+                        echo "</li> </ul>";
+                    }
+                    ?>
+
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <div class="row medium-8 large-7 columns">

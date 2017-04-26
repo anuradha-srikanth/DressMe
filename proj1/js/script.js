@@ -9,7 +9,6 @@ var resultsArray = [];
  * key events and process them accordingly. 
  */
  $(function(){
-  //document.cookie = 'user = "ANu"';
   $("#location").submit(function(){
     event.preventDefault();
     var city = $("#city").val();
@@ -29,10 +28,8 @@ var resultsArray = [];
         art4: (resultsArray[3]).id,
         art5: (resultsArray[4]).id
       }
-     }).done(function(results){
-   // console.log(results);
-   //var jsonString =  (JSON.parse(results));
-   //console.log(JSON.parse(results));
+    }).done(function(results){
+
    console.log(results);
 
  }).fail(function(){
@@ -55,12 +52,16 @@ var resultsArray = [];
       //var weatherArray = array('location'=>)
       // var weatherArray = [];
       //weatherArray
+      var out = "<p id='make_white'> The temperature in " + weather['location']['city'] + " is " + weather['current_observation']['temp_f'] + " but feels like " + weather['current_observation']['feelslike_f'] + "</p>";
+      $('.results .row').append(out);
       var location = weather['location']['city'];
       var temperature = weather['current_observation']['temp_f'];
       var feelslike = weather['current_observation']['feelslike_f'];
       weatherArray.push(location); //at index 0
       weatherArray.push(temperature); //at index 1
       weatherArray.push(feelslike); //at index 2
+
+
 
       var precipBool = !!(weather['current_observation']['precip_today']);
       var weatherString = weather['current_observation']['weather'];
@@ -138,12 +139,14 @@ function showArticle(array, article){
   var result = $('.templates .article .column').clone();
   var imgDiv = result.find('img');
   imgDiv.attr('src', article.image.sizes.XLarge.url);
-  result.find()
-  $('.results .row').append(result);
+  //var name = result.find('p');
+//name.text = article.name;
+// result = result+ "<h5> "+article.name +"</h5>";
+$('.results .row').append(result);
 
-  if($('.addOutfit').hasClass("hidden")){
-    $('.addOutfit').removeClass("hidden");
-  }
+if($('.addOutfit').hasClass("hidden")){
+  $('.addOutfit').removeClass("hidden");
+}
 }
 
 

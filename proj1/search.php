@@ -8,9 +8,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foundation for Sites</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Syncopate" rel="stylesheet">
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
-        <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
 
@@ -19,71 +20,40 @@
           <div class="top-bar">
             <div class="row column">
               <div class="top-bar-left">
-                <ul class="dropdown menu" data-dropdown-menu>
-                  <li class="menu-text">Site Title</li>
-                  <li class="has-submenu">
-                    <a href="#">One</a>
-                    <ul class="submenu menu vertical" data-submenu>
-                      <li><a href="#">One</a></li>
-                      <li><a href="#">Two</a></li>
-                      <li><a href="#">Three</a></li>
-                  </ul>
-              </li>
-              <li><a href="#">Two</a></li>
-              <li><a href="#">Three</a></li>
-          </ul>
-      </div>
- <div class="top-bar-right">
-<!--         <ul class="menu">
-          <li>
-            <input type="search" placeholder="Search">
-        </li>
-        <li>
-            <button type="button" class="button">Search</button>
-        </li>
-    </ul> -->
-    <?php 
+                  <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li>
+                  </div>
+                  <div class="top-bar-right">
 
-if(isset($_SESSION['userID'])){
-    echo "<ul class='menu'> <li> Hi, ";
-    echo $_SESSION['username'];
-    echo "</li> </ul>";
-}else{
-    echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
-    echo "</li> </ul>";
-}
-     ?>
-</div> 
-</div>
-</div>
-</div>
+                    <?php 
+
+                    if(isset($_SESSION['userID'])){
+                        echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
+        //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
+                        echo "</li> </ul>";
+        //echo ""
+                    }else{
+                        echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
+                        echo "</li> </ul>";
+                    }
+                    ?>
+
+                </div> 
+            </div>
+        </div>
+    </div>
 </div>
 
 
-<!-- <div id="hide_form">
-
-    <form id='location'>
-        <input name='location' id='city' type='textbox' placeholder='City'>
-        <input name='location' id='state' type='textbox' placeholder="State"> 
-        <button type='submit' id='sub' placeholder='SUBMIT' value='Submit'> </button>
-    <div class="large-12 columns">
-    <a href="my_outfit.php" type="submit" name="location" class="button expand large">Submit</a>
-</div>
-
-</form>
-
-</div>
--->
 <br>
 <br>
 
 <form data-abide novalidate id='location'>
     <div class="row form_anu small-9 large-centered columns">
         <div class="small-6 large-centered columns">
-          <label>Number Required
+          <label>City
             <input id='city' type="text" placeholder="City" aria-describedby="exampleHelpText" required>
             <span class="form-error">
-              Yo, you had better fill this out, it's required.
+              You had better fill this out, it's required.
           </span>
       </label>
       <p class="help-text" id="exampleHelpText">Here's how you use this input field!</p>
@@ -91,13 +61,13 @@ if(isset($_SESSION['userID'])){
 
 
   <div class="small-6 large-centered columns">
-      <label>Password Required
+      <label> State/Country
         <input id='state' type="text" placeholder="State" aria-describedby="exampleHelpText" required >
         <span class="form-error">
           I'm required!
       </span>
   </label>
-  <p class="help-text" id="exampleHelpText">Enter a password please.</p>
+  <p class="help-text" id="exampleHelpText">Enter a state/country please.</p>
 </div>
 
 <div class="row">
@@ -119,11 +89,12 @@ if(isset($_SESSION['userID'])){
 <div class="templates hidden">
     <div class="article">
         <div class="column">
-          <img class="thumbnail image" src="">
-          <h5>My Site</h5>
-      </div>
-  </div>
-  <div class="outfit">
+            <br>
+            <img class="thumbnail image" src="">
+            <p> </p>
+        </div>
+    </div>
+    <div class="outfit">
       <div class="row small-up-2 medium-up-3 large-up-4">
       </div>
   </div>
@@ -136,9 +107,9 @@ if(isset($_SESSION['userID'])){
         <!-- <button class='addOutfit hidden'> Add to My Outfits </button> -->
         <!-- <input class='addOutfit hidden' type='button' /> -->
         <div id='addDiv'>
-        <a href='my_profile.php'>
-        <button class="button addOutfit hidden" >Add to Cart</button>
-        </a>
+            <a href='my_profile.php'>
+                <button class="button addOutfit hidden" >Add to Cart</button>
+            </a>
         </div>
     </div>
 </div>

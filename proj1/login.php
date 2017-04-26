@@ -58,12 +58,12 @@ if(mysqli_connect_errno()){
             $addUser .= '" , "';
             $addUser .= $_POST['newPassword'];
             $addUser .= '" )';
-            //echo $addUser;
+            echo $addUser;
             $result1 = mysqli_query($connection, $addUser);
             if(!$result1){
                 die("Database query failed: Add User");
             }else{
-                echo 'success';
+                //echo 'success';
                 $style1 = 'dress-pant';
                 $color1 = 'blue';
                 $pref = 'INSERT INTO Preferences (color , style , user_id) VALUES ("';
