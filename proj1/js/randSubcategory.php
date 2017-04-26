@@ -33,7 +33,7 @@ if(isset($_POST['categoryName'])){
     //print_r($show_subcategories);
     $result1 = mysqli_query($connection, $show_subcategories);
     if(!$result1){
-      die("Database query failed: Show categories");
+      die("Database query failed: Show weather");
     }else{
 
       $resultsArray = [];

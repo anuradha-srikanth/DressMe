@@ -10,6 +10,7 @@
     <title>Foundation for Sites</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="css/search.css">
 </head>
 <body>
 
@@ -32,16 +33,27 @@
               <li><a href="#">Three</a></li>
           </ul>
       </div>
-      <div class="top-bar-right">
-        <ul class="menu">
+ <div class="top-bar-right">
+<!--         <ul class="menu">
           <li>
             <input type="search" placeholder="Search">
         </li>
         <li>
             <button type="button" class="button">Search</button>
         </li>
-    </ul>
-</div>
+    </ul> -->
+    <?php 
+
+if(isset($_SESSION['userID'])){
+    echo "<ul class='menu'> <li> Hi, ";
+    echo $_SESSION['username'];
+    echo "</li> </ul>";
+}else{
+    echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
+    echo "</li> </ul>";
+}
+     ?>
+</div> 
 </div>
 </div>
 </div>
@@ -99,6 +111,11 @@
 </div> -->
 </div>
 
+<br>
+<br>
+<br>
+<br>
+
 <div class="templates hidden">
     <div class="article">
         <div class="column">
@@ -111,14 +128,19 @@
       </div>
   </div>
 </div>
-
-<div class='results'>
-    <div class="row small-up-2 medium-up-3 large-up-4">
-        <!-- <p> 'hello' </p> -->
+<div class="container">
+    <div class='results'>
+        <div class="row small-up-2 medium-up-3 large-up-4">
+            <!-- <p> 'hello' </p> -->
+        </div>
+        <!-- <button class='addOutfit hidden'> Add to My Outfits </button> -->
+        <!-- <input class='addOutfit hidden' type='button' /> -->
+        <div id='addDiv'>
+        <a href='my_profile.php'>
+        <button class="button addOutfit hidden" >Add to Cart</button>
+        </a>
+        </div>
     </div>
-    <!-- <button class='addOutfit hidden'> Add to My Outfits </button> -->
-    <!-- <input class='addOutfit hidden' type='button' /> -->
-    <button class="button addOutfit hidden" >Add to Cart</button>
 </div>
 
 <div id='divThat'>

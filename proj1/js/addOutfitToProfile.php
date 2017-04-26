@@ -19,8 +19,7 @@ if(isset($_POST['art1'])){
       " (" . mysqli_connect_errno(). ")"
       );
 }else{
-    print_r($_SESSION);
-    echo $_SESSION['userID'];
+  
     if(isset($_SESSION['userID'])){
         $outf = 'INSERT INTO Outfit (shoeProductID, bottomProductID, topProductID, accessoryProductID, outerwearProductID, user_id) VALUES (';
         $outf .= $_POST['art1'];

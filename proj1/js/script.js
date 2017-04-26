@@ -19,7 +19,6 @@ var resultsArray = [];
   });
 
   $('.addOutfit').click(function(){
-    console.log("HELLOO");
     var request = $.ajax({
       url: "js/addOutfitToProfile.php",
       type: "post",
@@ -138,7 +137,7 @@ function showArticle(array, article){
 
   var result = $('.templates .article .column').clone();
   var imgDiv = result.find('img');
-  imgDiv.attr('src', article.image.sizes.Medium.url);
+  imgDiv.attr('src', article.image.sizes.XLarge.url);
   result.find()
   $('.results .row').append(result);
 
