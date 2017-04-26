@@ -1,4 +1,6 @@
-<?php
+<?php session_start(); ?>
+
+<?php 
 //echo "<script> console.log('hello'); </script>";
 //echo 'hello';
 //print_r($_POST);
@@ -43,7 +45,7 @@ if(isset($_POST['categoryName'])){
 
       //this line returns an object
       echo json_encode(($resultsArray[$rand]));
-
+//echo json_encode(($resultsArray));
     }
   }
 

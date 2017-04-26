@@ -1,3 +1,6 @@
+<?php session_start(); ?>
+
+
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -9,7 +12,6 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-
 
     <div class="top-bar-container" data-sticky-container>
         <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
@@ -46,18 +48,52 @@
 </div>
 
 
-<div id="hide_form">
+<!-- <div id="hide_form">
 
     <form id='location'>
         <input name='location' id='city' type='textbox' placeholder='City'>
         <input name='location' id='state' type='textbox' placeholder="State"> 
         <button type='submit' id='sub' placeholder='SUBMIT' value='Submit'> </button>
-<!--     <div class="large-12 columns">
+    <div class="large-12 columns">
     <a href="my_outfit.php" type="submit" name="location" class="button expand large">Submit</a>
-</div> -->
+</div>
 
 </form>
 
+</div>
+-->
+<br>
+<br>
+
+<form data-abide novalidate id='location'>
+    <div class="row form_anu small-9 large-centered columns">
+        <div class="small-6 large-centered columns">
+          <label>Number Required
+            <input id='city' type="text" placeholder="City" aria-describedby="exampleHelpText" required>
+            <span class="form-error">
+              Yo, you had better fill this out, it's required.
+          </span>
+      </label>
+      <p class="help-text" id="exampleHelpText">Here's how you use this input field!</p>
+  </div>
+
+
+  <div class="small-6 large-centered columns">
+      <label>Password Required
+        <input id='state' type="text" placeholder="State" aria-describedby="exampleHelpText" required >
+        <span class="form-error">
+          I'm required!
+      </span>
+  </label>
+  <p class="help-text" id="exampleHelpText">Enter a password please.</p>
+</div>
+
+<div class="row">
+    <fieldset class="small-3 small-centered columns">
+      <button class="expanded button" type="submit" value="Submit">Submit</button>
+  </fieldset>
+</div>
+</form>
 <!-- <div class="row">
   <div class="small-6 large-centered columns">6 centered</div>
 </div> -->
@@ -66,7 +102,7 @@
 <div class="templates hidden">
     <div class="article">
         <div class="column">
-          <img class="image" src="">
+          <img class="thumbnail image" src="">
           <h5>My Site</h5>
       </div>
   </div>
@@ -77,9 +113,12 @@
 </div>
 
 <div class='results'>
-<div class="row small-up-2 medium-up-3 large-up-4">
-    <!-- <p> 'hello' </p> -->
+    <div class="row small-up-2 medium-up-3 large-up-4">
+        <!-- <p> 'hello' </p> -->
     </div>
+    <!-- <button class='addOutfit hidden'> Add to My Outfits </button> -->
+    <!-- <input class='addOutfit hidden' type='button' /> -->
+    <button class="button addOutfit hidden" >Add to Cart</button>
 </div>
 
 <div id='divThat'>
@@ -93,13 +132,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 <script src="js/script.js"></script>
 
-
-<?php
-
-// include 'js/script.js.php';
-
-
-?>
 
 
 

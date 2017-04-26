@@ -1,8 +1,9 @@
 
 //var allCategories = ['Category_top', 'Category_bottom', 'Category_shoes'];
 var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
-var resultsArray = '';
+var resultsString = '';
 var weatherArray = [];
+var resultsArray = [];
 
 /* This function fires as soon as the index page loads. It will listen for
  * key events and process them accordingly. 
@@ -16,6 +17,32 @@ var weatherArray = [];
     //weather is an array of different weather conditions 
     getWeather(city,state);
   });
+
+  $('.addOutfit').click(function(){
+    console.log("HELLOO");
+    var request = $.ajax({
+      url: "js/addOutfitToProfile.php",
+      type: "post",
+      data: {
+        art1: (resultsArray[0]).id,
+        art2: (resultsArray[1]).id,
+        art3: (resultsArray[2]).id,
+        art4: (resultsArray[3]).id,
+        art5: (resultsArray[4]).id
+      }
+     }).done(function(results){
+   // console.log(results);
+   //var jsonString =  (JSON.parse(results));
+   //console.log(JSON.parse(results));
+   console.log(results);
+
+ }).fail(function(){
+  console.log("ERROR");
+    //return 'null';
+  });
+
+
+})
 
 });
 
@@ -52,7 +79,7 @@ var weatherArray = [];
 
       for (var i=0; i<allCategories.length; i++){
       //randomly picks a subcategory out of category
-      pickSubCategories(weatherArray, resultsArray, allCategories[i]);
+      pickSubCategories(weatherArray, resultsString, allCategories[i]);
     }
 
   }
@@ -65,7 +92,7 @@ var weatherArray = [];
  * pickSubCategories - This function takes in a category and  randomly picks a
  *                     subcategory within it. 
  */
- function pickSubCategories(weatherArray, resultsArray, categoryName){
+ function pickSubCategories(weatherArray, resultsString, categoryName){
   var request = $.ajax({
     //async: false, 
     //dataType: 'json',
@@ -78,8 +105,8 @@ var weatherArray = [];
    }).done(function(results){
    // console.log(results);
    var jsonString =  (JSON.parse(results)).name;
-   console.log(categoryName);
-   pickOutfit(resultsArray, jsonString);
+   //console.log(JSON.parse(results));
+   pickOutfit(resultsString, jsonString);
 
  }).fail(function(){
   console.log("ERROR");
@@ -92,10 +119,11 @@ function pickOutfit(array, subCategory){
 
   var subCat = subCategory.toLowerCase();
   $.ajax({
-      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCategory + "&offset=0&limit=300",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
+      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCat + "&offset=0&limit=300",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
       dataType : "json",
       success : function(article) {
         var length = article.products.length;
+        console.log(length);
         var rand = Math.floor(Math.random()*10)%(length-1);
 
         showArticle(array, article.products[rand]);
@@ -105,31 +133,19 @@ function pickOutfit(array, subCategory){
 }
 
 function showArticle(array, article){
-// console.log(1);
-console.log(article);
-// var temp = "<img src='" + article.image.sizes.IPhoneSmall.url +"'>"
-// //array.push(temp);
-// array += temp;
-//return temp;
-var result = $('.templates .article .column').clone();
-console.log(result);
-var imgDiv = result.find('img');
-imgDiv.attr('src', article.image.sizes.Medium.url);
-result.find()
-//return result;
-//if($(".results").children().size() == 0){
-  // var wrapper = '<div class="row small-up-2 medium-up-3 large-up-4">';
-  // $('.results').append(wrapper);
-//}
-$('.results .row').append(result);
-//if($('.results .row').children().size() == 5){
-  // $('.results').append('</div>');
-//}
+  console.log(article);
+  resultsArray.push(article);
+
+  var result = $('.templates .article .column').clone();
+  var imgDiv = result.find('img');
+  imgDiv.attr('src', article.image.sizes.Medium.url);
+  result.find()
+  $('.results .row').append(result);
+
+  if($('.addOutfit').hasClass("hidden")){
+    $('.addOutfit').removeClass("hidden");
+  }
 }
 
-function showResults(results){
-
-  $('.results').append(article);
-}
 
 

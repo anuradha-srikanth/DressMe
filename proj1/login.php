@@ -1,3 +1,53 @@
+<?php session_start(); 
+
+    //Create the connection
+    //Use the Pitt server or for your local stack use "localhost"
+$host = "sis-teach-01.sis.pitt.edu"; 
+    //Your Pitt username for the Pitt server and "root" for localhost
+$user = "asrikant";
+    //Your password for the Pitt server and your password, if any, for localhost
+$password = "!S1059CMU&*";
+    //Name of your db - Pitt username for Pitt, and whatever you named it for local
+$dbname = "asrikant";
+$connection = mysqli_connect($host, $user, $password, $dbname);
+if(mysqli_connect_errno()){
+    die("Database connection failed: ".
+        mysqli_connect_error() . 
+        " (" . mysqli_connect_errno(). ")"
+        );
+        // echo "<p> AAAAAAAAAAAA </p>";
+}else if($_POST){
+    #validate?
+    if(isset($_POST['existingUser'])){
+        $username = $_POST['username'];
+        $pwd = $_POST['password'];
+        if(empty($username)||empty($pwd)){
+            echo "Please enter both username and password";
+        }
+        else{
+                #validate username and password
+            $query = "SELECT user_id FROM User WHERE username = '$username' AND password = '$pwd'";
+            $userquery = mysqli_query($connection, $query);
+                //echo($userquery);
+            $returned_rows = mysqli_num_rows($userquery);
+            if($returned_rows == 0){
+                echo "This is not a valid username or incorrect password";
+            } 
+            else{
+                    //echo "Login information stored";
+                $_SESSION['username'] = $username;
+                $result = mysqli_fetch_assoc($userquery);
+                $_SESSION['userID'] = $result['user_id'];
+                $_SESSION['login'] = true;
+                    // echo '<p>' . $_SESSION['userID'] . '</p>';
+                header('Location: search.php');
+            }
+        }
+    }
+}
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
@@ -23,6 +73,11 @@
               <div class="tabs-content" data-tabs-content="loginTabs">
                   <div class="tabs-panel is-active" id="panelLogin">
                      <div class="row">
+                         <div class="large-12 columns hidden">
+                            <label>Existing User
+                                <input type="text" name="existingUser" placeholder="existingUser" value="existingUser">
+                            </label>
+                        </div>
                         <div class="large-12 columns">
                             <label>Username
                                 <input type="text" name="username" placeholder="">
@@ -45,8 +100,18 @@
                         Remember me
                     </div>
                     <div class="large-12 columns">
-                        <a href="search.php" type="submit" name="existingUser"class="button expand large">Login</a>
+                        <!-- <label> Login -->
+                        <input class='button expanded large' name='submit' value='login' type='submit'>
+                        <!-- </label> -->
+                        <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
                     </div>
+<!--                     <div class="large-12 columns">
+                        <a type="submit" name="existingUser"class="button expand large">Login</a>
+                    </div> -->
+                    <!-- <input type=submit value="Submit"> -->
+<!--                     <div class="large-12 columns">
+                        <a href="my_profile.php" type="submit" name="existingUser"class="button expand large">Login</a>
+                    </div> -->
                 </div>
             </div>
             <div class="tabs-panel" id="panelRegister">
@@ -71,9 +136,24 @@
                             <input type="password" name="confirmPassword" placeholder="">
                         </label>
                     </div>
+
                     <div class="large-12 columns">
-                        <a href="search.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
+                        <!-- <label> Login -->
+                        <input class='button expanded large' name='submit' value='login' type='submit'>
+                        <!-- </label> -->
+                        <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
                     </div>
+
+<!--                     <div class="large-12 columns">
+                        <a href="search.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
+                    </div> -->
+<!--                     <div class="large-12 columns">
+                        <a type="submit" name="newUser" class="button expand large">Sign Up</a>
+                    </div> -->
+                    <!--                     <input type=submit value="Submit"> -->
+<!--                     <div class="large-12 columns">
+                        <a href="my_profile.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -85,51 +165,6 @@
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
 
-    <?php
-
-    //Create the connection
-    //Use the Pitt server or for your local stack use "localhost"
-    $host = "sis-teach-01.sis.pitt.edu"; 
-    //Your Pitt username for the Pitt server and "root" for localhost
-    $user = "asrikant";
-    //Your password for the Pitt server and your password, if any, for localhost
-    $password = "!S1059CMU&*";
-    //Name of your db - Pitt username for Pitt, and whatever you named it for local
-    $dbname = "asrikant";
-    $connection = mysqli_connect($host, $user, $password, $dbname);
-    if(mysqli_connect_errno()){
-        die("Database connection failed: ".
-            mysqli_connect_error() . 
-            " (" . mysqli_connect_errno(). ")"
-            );
-    }else if($_POST){
-    #validate?
-        if(isset($_POST['existingUser'])){
-           $username = $_POST['username'];
-           $pwd = $_POST['password'];
-           if(empty($username)||empty($pwd)){
-            echo "Please enter both username and password";
-        }
-        else{
-        #validate username and password
-            $query = "SELECT userID FROM User WHERE username = '$username' AND password = '$pwd'";
-            $userquery = mysqli_query($connection, $query);
-        //echo($userquery);
-            $returned_rows = mysqli_num_rows($userquery);
-            if($returned_rows == 0){
-                echo "This is not a valid username or incorrect password";
-            } 
-            else{
-                $_SESSION['username'] = $username;
-                $result = mysqli_fetch_assoc($userquery);
-                $_SESSION['userID'] = $result['userID'];
-                $_SESSION['login'] = true;
-                header('Location: search.php');
-            }
-        }
-    }
-}
-
-?>
+    
 </body>
 </html>

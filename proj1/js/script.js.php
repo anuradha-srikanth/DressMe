@@ -1,46 +1,145 @@
-<?php
-//echo "<script> console.log('hello'); </script>";
-//echo 'hello';
-//print_r($_POST);
-if(isset($_POST['categoryName'])){
-//Create the connection
-    //Use the Pitt server or for your local stack use "localhost"
-  $host = "sis-teach-01.sis.pitt.edu"; 
-    //Your Pitt username for the Pitt server and "root" for localhost
-  $user = "asrikant";
-    //Your password for the Pitt server and your password, if any, for localhost
-  $password = "!S1059CMU&*";
-    //Name of your db - Pitt username for Pitt, and whatever you named it for local
-  $dbname = "asrikant";
-  $connection = mysqli_connect($host, $user, $password, $dbname);
-  if(mysqli_connect_errno()){
-    die("Database connection failed: ".
-      mysqli_connect_error() . 
-      " (" . mysqli_connect_errno(). ")"
-      );
-  }else{
-    $show_subcategories = 'SELECT * FROM Category_top';//+ $_POST['categoryName'];
-    $result1 = mysqli_query($connection, $show_subcategories);
-    if(!$result1){
-      die("Database query failed: Show categories");
-    }else{
-      // $rand = rand(0,count($result1['num_rows']));
-      // //echo($result1[$rand]);
-      // print_r($result1['num_rows']);
-      // print('\n');
-      // //return $result1[$rand];
-      //for($rand = rand(0,))
-      $resultsArray = [];
-      while($row1 = mysqli_fetch_assoc($result1)){
-        array_push($resultsArray, $row1);
+?>
+
+<!-- var allCategories = ['Category_top', 'Category_bottom', 'Category_shoes']; -->
+var allCategories = ['Category_top', 'Category_bottom', 'Category_outerwear', 'Category_shoes', 'Category_accessories' ];
+var resultsString = '';
+var weatherArray = [];
+var resultsArray = [];
+
+
+ $(function(){
+  <!-- //document.cookie = 'user = "ANu"'; -->
+  $("#location").submit(function(){
+    event.preventDefault();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    <!-- //weather is an array of different weather conditions  -->
+    getWeather(city,state);
+  });
+
+  $('.addOutfit').click(function(){
+    console.log("HELLOO");
+    var request = $.ajax({
+      url: "js/addOutfitToProfile.php",
+      type: "post",
+      data: {
+        art1: (resultsArray[0]).id,
+        art2: (resultsArray[1]).id,
+        art3: (resultsArray[2]).id,
+        art4: (resultsArray[3]).id,
+        art5: (resultsArray[4]).id
       }
-      $rand = rand(0,count($resultsArray));
-      //print_r($resultsArray[$rand]);
-      //echo json_encode($resultsArray[$rand]);
-      echo json_encode($resultsArray[$rand]);
+     }).done(function(results){
+<!--    // console.log(results);
+   //var jsonString =  (JSON.parse(results));
+   //console.log(JSON.parse(results)); -->
+   console.log(results);
+
+ }).fail(function(){
+  console.log("ERROR");
+    <!-- //return 'null'; -->
+  });
+
+
+})
+
+});
+
+ function getWeather(city,state){
+  var state1 = encodeURIComponent(state);
+  var city1 = encodeURIComponent(city);
+  $.ajax({
+    url : "http://api.wunderground.com/api/e1a14a833d1ce535/geolookup/conditions/q/" + state1+ "/" + city1 +".json",
+    dataType : "jsonp",
+    success : function(weather) {
+<!--       //var weatherArray = array('location'=>)
+      // var weatherArray = []; -->
+      //weatherArray
+      var location = weather['location']['city'];
+      var temperature = weather['current_observation']['temp_f'];
+      var feelslike = weather['current_observation']['feelslike_f'];
+      weatherArray.push(location); //at index 0
+      weatherArray.push(temperature); //at index 1
+      weatherArray.push(feelslike); //at index 2
+
+      var precipBool = !!(weather['current_observation']['precip_today']);
+      var weatherString = weather['current_observation']['weather'];
+      if(precipBool || weatherString.toLowerCase().includes("rain")){
+        var rainBool = 'true';
+      }else{
+        var rainBool = 'false';
+      }if(precipBool || weatherString.toLowerCase().includes("snow")){
+        var snowBool = 'true';
+      }else{
+        var snowBool = 'false';
+      }
+      weatherArray.push(rainBool); //at index 3
+      weatherArray.push(snowBool); //at index 4
+
+      for (var i=0; i < allCategories.length; i++){
+      <!-- randomly picks a subcategory out of category -->
+      pickSubCategories(weatherArray, resultsString, allCategories[i]);
     }
+
   }
+});
 
 }
-?>
+
+
+ function pickSubCategories(weatherArray, resultsString, categoryName){
+  var request = $.ajax({
+    //async: false, 
+    //dataType: 'json',
+    url: "js/randSubcategory.php",
+    type: "post",
+    data: {categoryName: categoryName,
+     tempFeelsLike: weatherArray[2],
+     rainBool: weatherArray[3],
+     snowBool: weatherArray[4]}
+   }).done(function(results){
+   // console.log(results);
+   var jsonString =  (JSON.parse(results)).name;
+   //console.log(JSON.parse(results));
+   pickOutfit(resultsString, jsonString);
+
+ }).fail(function(){
+  console.log("ERROR");
+    //return 'null';
+  });
+
+}
+
+function pickOutfit(array, subCategory){
+
+  var subCat = subCategory.toLowerCase();
+  $.ajax({
+      url : "http://api.shopstyle.com/api/v2/products?pid=uid2009-39252003-12&cat=" + subCat + "&offset=0&limit=300",//"http://api.shopstyle.com/api/v2/categories?pid=uid2009-39252003-12",
+      dataType : "json",
+      success : function(article) {
+        var length = article.products.length;
+        console.log(length);
+        var rand = Math.floor(Math.random()*10)%(length-1);
+
+        showArticle(array, article.products[rand]);
+
+      }
+    });
+}
+
+function showArticle(array, article){
+  console.log(article);
+  resultsArray.push(article);
+
+  var result = $('.templates .article .column').clone();
+  var imgDiv = result.find('img');
+  imgDiv.attr('src', article.image.sizes.Medium.url);
+  result.find()
+  $('.results .row').append(result);
+
+  if($('.addOutfit').hasClass("hidden")){
+    $('.addOutfit').removeClass("hidden");
+  }
+}
+
 

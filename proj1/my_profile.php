@@ -1,3 +1,9 @@
+<?php session_start(); 
+
+print_r($_SESSION);
+?>
+
+
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
@@ -11,7 +17,7 @@
 <body>
   <?php if(!(isset($_SESSION['login']) && ($_SESSION['login'] == true))){
     echo 'Please Login before you can access this information';
-    echo '<a href="login.php"> </a>';
+    echo '<a href="login.php"> hello </a>';
 }else{
 //echo out all of the following:
 }
