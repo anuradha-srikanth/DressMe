@@ -11,9 +11,9 @@ $(function(){
             dataType : "json",
             success : function(article) {
                 console.log(article);
-                var result = $('.templates .article .column').clone();
+                var result = $('.templates .article').clone();
                 var imgDiv = result.find('img');
-                imgDiv.attr('src', article.image.sizes.XLarge.url);
+                imgDiv.attr('src', article.image.sizes.Large.url);
                 result.find();
                 $('.results .row').append(result);
             }

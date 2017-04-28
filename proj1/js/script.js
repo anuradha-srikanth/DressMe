@@ -136,13 +136,15 @@ function showArticle(array, article){
   console.log(article);
   resultsArray.push(article);
 
-  var result = $('.templates .article .column').clone();
+  var result = $('.templates .article ').clone();
   var imgDiv = result.find('img');
-  imgDiv.attr('src', article.image.sizes.XLarge.url);
+  imgDiv.attr('src', article.image.sizes.Large.url);
+  var name = result.find('.image-hover-wrapper-banner');
+  name.innerHTML = article.name;
   //var name = result.find('p');
 //name.text = article.name;
 // result = result+ "<h5> "+article.name +"</h5>";
-$('.results .row').append(result);
+$('.results .r').append(result);
 
 if($('.addOutfit').hasClass("hidden")){
   $('.addOutfit').removeClass("hidden");

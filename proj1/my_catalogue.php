@@ -24,92 +24,92 @@
   }
   ?>
 
-     <div class="top-bar-container" data-sticky-container>
-        <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
-          <div class="top-bar">
-            <div class="row column">
-              <div class="top-bar-left">
-                  <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li>
-                  </div>
-                  <div class="top-bar-right">
+  <div class="top-bar-container" data-sticky-container>
+    <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
+      <div class="top-bar">
+        <div class="row column">
+          <div class="top-bar-left">
+            <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li> </ul>
+          </div>
+          <div class="top-bar-right">
 
-                    <?php 
+            <?php 
 
-                    if(isset($_SESSION['userID'])){
-                        echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
+            if(isset($_SESSION['userID'])){
+              echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
         //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
-                        echo "</li> </ul>";
+              echo "</li> </ul>";
         //echo ""
-                    }else{
-                        echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
-                        echo "</li> </ul>";
-                    }
-                    ?>
+            }else{
+              echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
+              echo "</li> </ul>";
+            }
+            ?>
 
-                </div> 
-            </div>
+          </div> 
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
 
 
 
-<?php
-if(isset($_SESSION['userID'])){
-  echo "<div class='welcome'> <p>Hi, ";
-  echo $_SESSION['userID'];
-  echo "! </p> </div>";
-}else{
-  echo "Please login to access this page";
-}
-
-?>
-
-
-<div class="row small-up-2 medium-up-3 large-up-4">
   <?php
-//Create the connection
-    //Use the Pitt server or for your local stack use "localhost"
-  //$host = "sis-teach-01.sis.pitt.edu";
-   $host = "sis-teach-01.sis.pitt.edu";  
-    //Your Pitt username for the Pitt server and "root" for localhost
-  $user = "asrikant";
-    //Your password for the Pitt server and your password, if any, for localhost
-  $password = "!S1059CMU&*";
-    //Name of your db - Pitt username for Pitt, and whatever you named it for local
-  $dbname = "asrikant";
-  $connection = mysqli_connect($host, $user, $password, $dbname);
-  if(mysqli_connect_errno()){
-    die("Database connection failed: ".
-      mysqli_connect_error() . 
-      " (" . mysqli_connect_errno(). ")"
-      );
+  if(isset($_SESSION['userID'])){
+    echo "<div class='welcome'> <p>Hi, ";
+    echo $_SESSION['userID'];
+    echo "! </p> </div>";
   }else{
-    if(isset($_SESSION['userID'])){
-      $outfits = 'SELECT * FROM Outfit';
-      $outfits .= ' WHERE user_id = ';
-      $outfits .= $_SESSION['userID'];
-      $result1 = mysqli_query($connection, $outfits);
-      if(!$result1){
-        die("Database query failed: Show outfits");
-      }else{
-        while($row1 = mysqli_fetch_assoc($result1)){
-
-          echo  '<div class="column">';
-          echo '<a href="my_outfit.php?id=';
-          echo $row1['outfitID'];
-          echo '">';
-          echo '<img class="thumbnail" src="http://placehold.it/550x550">';
-          echo '</a>';
-          echo '<h5>My Site</h5>';
-          echo '</div>';
-        }
-      }
-    }
+    echo "Please login to access this page";
   }
 
   ?>
+
+
+  <div class="row small-up-2 medium-up-3 large-up-4">
+    <?php
+//Create the connection
+    //Use the Pitt server or for your local stack use "localhost"
+  //$host = "sis-teach-01.sis.pitt.edu";
+    $host = "sis-teach-01.sis.pitt.edu";  
+    //Your Pitt username for the Pitt server and "root" for localhost
+    $user = "asrikant";
+    //Your password for the Pitt server and your password, if any, for localhost
+    $password = "!S1059CMU&*";
+    //Name of your db - Pitt username for Pitt, and whatever you named it for local
+    $dbname = "asrikant";
+    $connection = mysqli_connect($host, $user, $password, $dbname);
+    if(mysqli_connect_errno()){
+      die("Database connection failed: ".
+        mysqli_connect_error() . 
+        " (" . mysqli_connect_errno(). ")"
+        );
+    }else{
+      if(isset($_SESSION['userID'])){
+        $outfits = 'SELECT * FROM Outfit';
+        $outfits .= ' WHERE user_id = ';
+        $outfits .= $_SESSION['userID'];
+        $result1 = mysqli_query($connection, $outfits);
+        if(!$result1){
+          die("Database query failed: Show outfits");
+        }else{
+          while($row1 = mysqli_fetch_assoc($result1)){
+
+            echo  '<div class="column">';
+            echo '<a href="my_outfit.php?id=';
+            echo $row1['outfitID'];
+            echo '">';
+            echo '<img class="thumbnail" src="http://placehold.it/550x550">';
+            echo '</a>';
+            echo '<h5>My Site</h5>';
+            echo '</div>';
+          }
+        }
+      }
+    }
+
+    ?>
 
   </div>
 

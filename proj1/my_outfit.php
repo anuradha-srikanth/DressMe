@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Syncopate" rel="stylesheet">
   <link rel="stylesheet" href="css/foundation.css">
   <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/my_outfit.css">
 </head>
 <body>
 
@@ -43,12 +44,19 @@
 </div>
 
   <div class="templates hidden">
-    <div class="article">
-      <div class="column">
-        <img class="thumbnail image" src="">
-        <h5>My Site</h5>
+        <li  class="article">
+      <div class="image-hover-wrapper">
+        <span class="image-hover-wrapper-banner"> </span>
+        <a href="#">
+          <img class="thumbnail image" src="">
+          <!-- <img src="https://images.pexels.com/photos/163704/bike-old-wheel-two-wheeled-vehicle-163704.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"> -->
+          <span class="image-hover-wrapper-reveal">
+            <p>Check it<br><i class="fa fa-link" aria-hidden="true"></i></p>
+          </span>
+        </a>
       </div>
-    </div>
+
+    </li>
     <div class="outfit">
       <div class="row small-up-2 medium-up-3 large-up-4">
       </div>
@@ -62,6 +70,9 @@
       </div>
     </div>
   </div>
+
+
+
   <?php 
 
 //echo $_GET['id'];

@@ -103,30 +103,6 @@ if(mysqli_connect_errno()){
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <!-- <div class="top-bar-container" data-sticky-container>
-        <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
-          <div class="top-bar">
-            <div class="row column">
-              <div class="top-bar-left">
-                <ul class="dropdown menu" data-dropdown-menu>
-                  <li class="menu-text">Site Title</li>
-
-          </ul>
-      </div>
- <     <div class="top-bar-right">
-        <ul class="menu">
-          <li>
-            <input type="search" placeholder="Search">
-        </li>
-        <li>
-            <button type="button" class="button">Search</button>
-        </li>
-    </ul>
-</div>
-</div>
-</div>
-</div>
-</div> -->
 
 <div id="background-img">
 </div>
