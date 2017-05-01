@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+
+
+
     <div class="top-bar-container" data-sticky-container>
         <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
           <div class="top-bar">
@@ -25,7 +28,6 @@
 
                     if(isset($_SESSION['userID'])){
                         echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
-        //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
                         echo "</li> </ul>";
         //echo ""
                     }else{
@@ -34,28 +36,29 @@
                     }
                     ?>
 
-                </div> 
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <div class="row medium-8 large-7 columns">
       <div class="blog-post">
 
         <img class="thumbnail" src="http://placehold.it/850x350">
-        
+
     </div>
 </div>
+
+
 
 <?php
 
 // echo "hello";
 //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
-// $host = "sis-teach-01.sis.pitt.edu"; 
- $host = "localhost"; 
+$host = "sis-teach-01.sis.pitt.edu"; 
+//$host = "localhost"; 
     //Your Pitt username for the Pitt server and "root" for localhost
 $user = "asrikant";
     //Your password for the Pitt server and your password, if any, for localhost
@@ -69,9 +72,9 @@ if(mysqli_connect_errno()){
         " (" . mysqli_connect_errno(). ")"
         );
 }else{
-    echo "hello";
+    //echo "hello";
     if(isset($_SESSION['userID'])){
-        echo "hello123";
+        //echo "hello123";
         $outfits = 'SELECT * FROM Preferences';
         $outfits .= ' WHERE user_id = "';
         $outfits .= $_SESSION['userID'];

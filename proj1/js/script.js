@@ -103,13 +103,14 @@ var resultsArray = [];
      rainBool: weatherArray[3],
      snowBool: weatherArray[4]}
    }).done(function(results){
-   // console.log(results);
+   console.log(results);
    var jsonString =  (JSON.parse(results)).name;
    //console.log(JSON.parse(results));
    pickOutfit(resultsString, jsonString);
 
- }).fail(function(){
-  console.log("ERROR");
+ }).fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("request failed" +textStatus);
+ // console.log("ERROR");
     //return 'null';
   });
 

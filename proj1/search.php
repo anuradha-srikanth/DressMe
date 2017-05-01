@@ -15,104 +15,80 @@
 </head>
 <body>
 
+
+
   <div class="top-bar-container" data-sticky-container>
     <div class="sticky" data-sticky data-options="anchor: page; marginTop: 0; stickyOn: small;">
       <div class="top-bar">
         <div class="row column">
           <div class="top-bar-left">
-            <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li></ul>
+            <ul class='menu icon-top'> <li><a href='search.php'><i class='fi-list'></i> <span> <p class="change_font"> Dress Me! </p></span></a></li>
+            </div>
+            <div class="top-bar-right">
+
+              <?php 
+
+              if(isset($_SESSION['userID'])){
+                echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
+        //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
+                echo "</li> </ul>";
+        //echo ""
+              }else{
+                echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
+                echo "</li> </ul>";
+              }
+              ?>
+
+            </div> 
           </div>
-          <div class="top-bar-right">
-
-            <?php 
-
-            if(isset($_SESSION['userID'])){
-              echo '<ul class="dropdown menu" data-dropdown-menu>
-              <li>
-                <a href="#">Item 1</a>
-                <ul class="menu">
-                  <li><a href="#">Item 1A</a></li>
-                  <!-- ... -->
-                </ul>
-              </li>
-            </ul>';
-
-        //       echo '<a href="#" data-dropdown="hover1" data-options="is_hover:true; hover_timeout:5000">Has Hover Dropdown</a>
-        //       <ul id="hover1" class="f-dropdown" data-dropdown-content>
-        //         <li><a href="#">This is a link</a></li>
-        //         <li><a href="#">This is another</a></li>
-        //         <li><a href="#">Yet another</a></li>
-        //       </ul>';
-            echo '<ul class="dropdown menu" data-dropdown-menu>
-            <li>
-              <a href="#">Item 1</a>
-              <ul class="menu">
-                <li><a href="#">Item 1A</a></li>
-                <!-- ... -->
-              </ul>
-            </li>
-            <li><a href="#">Item 2</a></li>
-            <li><a href="#">Item 3</a></li>
-            <li><a href="#">Item 4</a></li>
-          </ul>';
-
-
-        }else{
-          echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
-          echo "</li> </ul>";
-        }
-        ?>
-
-      </div> 
-    </div>
-  </div>
-</div>
-</div>
-
-
-<br>
-<br>
-
-<form data-abide novalidate id='location'>
-  <div class="row form_anu small-9 large-centered columns">
-    <div class="small-6 large-centered columns">
-      <label>City
-        <input id='city' type="text" placeholder="City" aria-describedby="exampleHelpText" required>
-        <span class="form-error">
-          You had better fill this out, it's required.
-        </span>
-      </label>
-      <p class="help-text" id="exampleHelpText">Here's how you use this input field!</p>
+        </div>
+      </div>
     </div>
 
 
-    <div class="small-6 large-centered columns">
-      <label> State/Country
-        <input id='state' type="text" placeholder="State" aria-describedby="exampleHelpText" required >
-        <span class="form-error">
-          I'm required!
-        </span>
-      </label>
-      <p class="help-text" id="exampleHelpText">Enter a state/country please.</p>
-    </div>
+    <br>
+    <br>
 
-    <div class="row">
-      <fieldset class="small-3 small-centered columns">
-        <button class="expanded button" type="submit" value="Submit">Submit</button>
-      </fieldset>
-    </div>
-  </div>
-</form>
+    <form data-abide novalidate id='location'>
+      <div class="row form_anu small-9 large-centered columns">
+        <div class="small-6 large-centered columns">
+          <label>City
+            <input id='city' type="text" placeholder="City" aria-describedby="exampleHelpText" required>
+            <span class="form-error">
+              You had better fill this out, it's required.
+            </span>
+          </label>
+          <p class="help-text" id="exampleHelpText">Here's how you use this input field!</p>
+        </div>
 
-<br>
-<br>
-<br>
-<br>
 
-<div class="templates hidden">
+        <div class="small-6 large-centered columns">
+          <label> State/Country
+            <input id='state' type="text" placeholder="State" aria-describedby="exampleHelpText" required >
+            <span class="form-error">
+              I'm required!
+            </span>
+          </label>
+          <p class="help-text" id="exampleHelpText">Enter a state/country please.</p>
+        </div>
 
-  <!-- <div class="article"> -->
-  <!-- <div class="column"> -->
+        <div class="row">
+          <fieldset class="small-3 small-centered columns">
+            <button class="expanded button" type="submit" value="Submit">Submit</button>
+          </fieldset>
+        </div>
+      </div>
+    </form>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="templates hidden">
+
+      <!-- <div class="article"> -->
+      <!-- <div class="column"> -->
 <!--     <br>
     <li>
       <img class="thumbnail image" src="">

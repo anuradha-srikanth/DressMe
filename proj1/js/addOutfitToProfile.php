@@ -5,8 +5,8 @@
 if(isset($_POST['art1'])){
 //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
-   $host = "localhost"; 
-  //$host = "sis-teach-01.sis.pitt.edu"; 
+  // $host = "localhost"; 
+  $host = "sis-teach-01.sis.pitt.edu"; 
     //Your Pitt username for the Pitt server and "root" for localhost
   $user = "asrikant";
     //Your password for the Pitt server and your password, if any, for localhost
