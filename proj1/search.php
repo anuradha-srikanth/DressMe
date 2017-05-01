@@ -1,3 +1,24 @@
+<!-- search.php - This file contains the weather clothing search capability
+                  of this website. Inputing a location will fetch the weather of that particular location and applicable clothing choices for that location. 
+
+                  The functionality works using AJAX and API calls to Weather Underground and ShopStyle.com. Entering a location makes an API call to Weather Underground, which returns information about the weather. This information is then processed and, using database data about which clothing categories map to which weather conditions, returns some viable categories. These categories are then used to make an API call to Shopstyle to return relevant clothing.
+
+                  The majority of the processing and the logic of this function is carried out by: 
+                  1. script.js (in js folder)
+                  2. randSubCategory.php (in js folder)
+                  3. randOutfit.php (in js folder)
+
+                  Concepts:
+                  1. AJAX usage to make API Calls
+                  2. AJAX usage to reload only a portion of the webpage
+                  3. js to php informtion sending thorugh AJAX and POST method
+                  4. Database quering and processing
+
+-->
+
+
+
+
 <?php session_start(); ?>
 
 
@@ -30,9 +51,7 @@
 
               if(isset($_SESSION['userID'])){
                 echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
-        //echo "<li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li>";
                 echo "</li> </ul>";
-        //echo ""
               }else{
                 echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
                 echo "</li> </ul>";
@@ -118,15 +137,10 @@
 
   <div class="container">
     <div class='results'>
-      <!-- <div class="row small-up-2 medium-up-3 large-up-4"> -->
-      <!-- <p> 'hello' </p> -->
       <ul class="r small-block-grid-2 medium-block-grid-3 large-block-grid-4">
-        <!-- <div class="contain"> -->
-        <!-- </div> -->
+
       </ul>
     </div>
-    <!-- <button class='addOutfit hidden'> Add to My Outfits </button> -->
-    <!-- <input class='addOutfit hidden' type='button' /> -->
     <div id='addDiv'>
       <a href='my_catalogue.php'>
         <button class="button addOutfit hidden" >Add to Catalogue</button>

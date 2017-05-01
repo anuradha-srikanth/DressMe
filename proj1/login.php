@@ -1,9 +1,30 @@
+<!-- login.php - This file contans the login feature of this website. Logging
+                 into an account allows the user to access his/her profile, 
+                 save outfits to their personal catalogue and edit preferences
+                 so they can receive customized options of clothing. 
+
+                 The login page consists of a paneled login screen. Returning users can choose to login o skip logging in to access the weather feature only. New users can choose to sign up for an account or skip signing up. 
+
+                 Case 1: Returning users
+                 The username and password are removed of any potentially dangerous symbols and are validated to see if they are in the database. If they are, a global sessons variable stores their infromation and they can access their account through the next pages/ 
+
+                 Case 2: New users
+                 Users can choose to sign up for an account. You may only sign up for an account not already in the system as the database cannot store duplicates. Login information is validated using regex for format and stored in the database. You may then login as a returning user.
+
+                 Concepts:
+                 1. Database Insert and Validation queries
+                 2. Regex
+                 3. $_SESSION variable setting and access
+                 4. $_POST method of sending information without moving to another processing page
+                 
+ -->
+
 <?php session_start(); 
 
     //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
 $host = "sis-teach-01.sis.pitt.edu"; 
-// $host = "localhost"; 
+    // $host = "localhost"; 
     //Your Pitt username for the Pitt server and "root" for localhost
 $user = "asrikant";
     //Your password for the Pitt server and your password, if any, for localhost
@@ -16,10 +37,8 @@ if(mysqli_connect_errno()){
         mysqli_connect_error() . 
         " (" . mysqli_connect_errno(). ")"
         );
-        // echo "<p> AAAAAAAAAAAA </p>";
+    //This case is for returnig users trying to log in
 }else if($_POST){
-    print_r($_POST);
-    #validate?
     if(!empty($_POST['username']) && !empty($_POST['password'])){
         $username = $_POST['username'];
         $pwd = $_POST['password'];
@@ -27,32 +46,37 @@ if(mysqli_connect_errno()){
             echo "Please enter both username and password";
         }
         else{
-                #validate username and password
             $query = "SELECT user_id FROM User WHERE username = '$username' AND password = '$pwd'";
             $userquery = mysqli_query($connection, $query);
-                //echo($userquery);
             $returned_rows = mysqli_num_rows($userquery);
+            //Validates if this use exists in the system and logs in
             if($returned_rows == 0){
                 echo "This is not a valid username or incorrect password";
             } 
             else{
-                    //echo "Login information stored";
                 $_SESSION['username'] = $username;
                 $result = mysqli_fetch_assoc($userquery);
                 $_SESSION['userID'] = $result['user_id'];
                 $_SESSION['login'] = true;
-                    // echo '<p>' . $_SESSION['userID'] . '</p>';
                 header('Location: search.php');
             }
         }
     }
+    //This case is for if the user wants to register for a new account
     else if(!empty($_POST['newUsername']) && !empty($_POST['newPassword'])){
-        $username = $_POST['newUsername'];
+        //Validating that user has entered acceptable username
+        $namePattern = "/[A-Za-z]+/";
+        if(!preg_match($namePattern, $_POST['newUsername'])){
+            echo "Please enter a valid name using letters A-Z" . "<br>";
+        }else{
+            $username = $_POST['newUsername'];
+        }
         $pwd = $_POST['newPassword'];
         $email = $_POST['email'];
         if(empty($username)||empty($pwd)||empty($email)){
-            echo "Please enter username, password and email";
+            echo "Please enter valid username, password and email";
         }
+        //inserts new user into database
         else if(isset($_SESSION['userID'])){
             $addUser = 'INSERT INTO User (username , password) VALUES ( "';
             $addUser .= $_POST['newUsername'];
@@ -64,7 +88,8 @@ if(mysqli_connect_errno()){
             if(!$result1){
                 die("Database query failed: Add User");
             }else{
-                //echo 'success';
+                //preferences are preset for the new user
+                //they may choose to cahnge these later in their profile
                 $style1 = 'dress-pant';
                 $color1 = 'blue';
                 $pref = 'INSERT INTO Preferences (color , style , user_id) VALUES ("';
@@ -104,64 +129,64 @@ if(mysqli_connect_errno()){
 </head>
 <body>
 
-<div id="background-img">
-</div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <div id="background-img">
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
-<form class="medium-4 medium-offset-4 columns" action="login.php" method="post">
-    <div class="row">
-        <div class="large-12 columns">
+    <form class="medium-4 medium-offset-4 columns" action="login.php" method="post">
+        <div class="row">
+            <div class="large-12 columns">
 
-            <!-- foundation tabs -->
-            <ul class="tabs" data-tabs id="loginTabs">
-              <li class="tabs-title is-active"><a href="#panelLogin" aria-selected="true">Login</a></li>
-              <li class="tabs-title"><a href="#panelRegister">Register</a></li>
-          </ul>
+                <!-- foundation tabs -->
+                <ul class="tabs" data-tabs id="loginTabs">
+                  <li class="tabs-title is-active"><a href="#panelLogin" aria-selected="true">Login</a></li>
+                  <li class="tabs-title"><a href="#panelRegister">Register</a></li>
+              </ul>
 
-          <div class="tabs-content" data-tabs-content="loginTabs">
-              <div class="tabs-panel is-active" id="panelLogin">
-                 <div class="row">
-                     <div class="large-12 columns hidden">
-                        <label>Existing User
-                            <input type="text" name="existingUser" placeholder="existingUser" value="existingUser">
-                        </label>
+              <div class="tabs-content" data-tabs-content="loginTabs">
+                  <div class="tabs-panel is-active" id="panelLogin">
+                     <div class="row">
+                         <div class="large-12 columns hidden">
+                            <label>Existing User
+                                <input type="text" name="existingUser" placeholder="existingUser" value="existingUser">
+                            </label>
+                        </div>
+                        <div class="large-12 columns">
+                            <label>Username
+                                <input type="text" name="username" placeholder="" value="<?php  if(isset($_POST['usename'])) {echo $_POST['username'];}?>" >
+                            </label>
+                        </div>
+                        <div class="large-12 columns">
+                            <label>Password
+                                <input type="password" name="password" placeholder="">
+                            </label>
+                        </div>
+                        <div class="large-6 columns text-right">
+                            <div class="switch small">
+                              <input class="switch-input" id="largeSwitch" type="checkbox" name="exampleSwitch">
+                              <label class="switch-paddle" for="largeSwitch">
+                                <span class="show-for-sr">Show Large Elephants</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="large-6 columns">
+                        Remember me
                     </div>
                     <div class="large-12 columns">
-                        <label>Username
-                            <input type="text" name="username" placeholder="">
-                        </label>
+                        <!-- <label> Login -->
+                        <input class='button expanded large' name='submit' value='login' type='submit'>
+                        <!-- </label> -->
+                        <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
+
                     </div>
                     <div class="large-12 columns">
-                        <label>Password
-                            <input type="password" name="password" placeholder="">
-                        </label>
+                        <a href="search.php" class='skip float-right'> Skip for now </a>
                     </div>
-                    <div class="large-6 columns text-right">
-                        <div class="switch small">
-                          <input class="switch-input" id="largeSwitch" type="checkbox" name="exampleSwitch">
-                          <label class="switch-paddle" for="largeSwitch">
-                            <span class="show-for-sr">Show Large Elephants</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="large-6 columns">
-                    Remember me
-                </div>
-                <div class="large-12 columns">
-                    <!-- <label> Login -->
-                    <input class='button expanded large' name='submit' value='login' type='submit'>
-                    <!-- </label> -->
-                    <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
-
-                </div>
-                <div class="large-12 columns">
-                    <a href="search.php" class='skip float-right'> Skip for now </a>
-                </div>
 <!--                     <div class="large-12 columns">
                         <a type="submit" name="existingUser"class="button expand large">Login</a>
                     </div> -->
@@ -202,20 +227,7 @@ if(mysqli_connect_errno()){
                     <div class="large-12 columns">
                         <!-- <label> Login -->
                         <input class='button expanded large' name='submit' value='login' type='submit'>
-                        <!-- </label> -->
-                        <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
                     </div>
-
-<!--                     <div class="large-12 columns">
-                        <a href="search.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
-                    </div> -->
-<!--                     <div class="large-12 columns">
-                        <a type="submit" name="newUser" class="button expand large">Sign Up</a>
-                    </div> -->
-                    <!--                     <input type=submit value="Submit"> -->
-<!--                     <div class="large-12 columns">
-                        <a href="my_profile.php" type="submit" name="newUser" class="button expand large">Sign Up</a>
-                    </div> -->
                 </div>
             </div>
         </div>
