@@ -20,7 +20,7 @@
  -->
 
 <?php session_start(); 
-
+session_unset();
     //Create the connection
     //Use the Pitt server or for your local stack use "localhost"
 $host = "sis-teach-01.sis.pitt.edu"; 
@@ -94,7 +94,7 @@ if(mysqli_connect_errno()){
                 $color1 = 'blue';
                 $pref = 'INSERT INTO Preferences (color , style , user_id) VALUES ("';
                 $pref .= $color1 .'", "';
-                $pref .= $style1 .'", ';//", 'dress-pant' , '";
+                $pref .= $style1 .'", ';
                 $pref .= $_SESSION['userID'];
                 $pref .= ')';
 
@@ -178,22 +178,11 @@ if(mysqli_connect_errno()){
                         Remember me
                     </div>
                     <div class="large-12 columns">
-                        <!-- <label> Login -->
                         <input class='button expanded large' name='submit' value='login' type='submit'>
-                        <!-- </label> -->
-                        <!-- <a href="search.php" type="submit" name="existingUser" class="button expand large">Login</a> -->
-
                     </div>
                     <div class="large-12 columns">
                         <a href="search.php" class='skip float-right'> Skip for now </a>
                     </div>
-<!--                     <div class="large-12 columns">
-                        <a type="submit" name="existingUser"class="button expand large">Login</a>
-                    </div> -->
-                    <!-- <input type=submit value="Submit"> -->
-<!--                     <div class="large-12 columns">
-                        <a href="my_profile.php" type="submit" name="existingUser"class="button expand large">Login</a>
-                    </div> -->
                 </div>
             </div>
             <div class="tabs-panel" id="panelRegister">

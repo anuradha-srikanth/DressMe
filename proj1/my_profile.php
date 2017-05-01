@@ -29,7 +29,6 @@
                     if(isset($_SESSION['userID'])){
                         echo "<ul class='menu icon-top'> <li><a href='my_profile.php'><i class='fi-list'></i> <span>My Profile</span></a></li> <li><a href='my_catalogue.php'><i class='fi-list'></i> <span>My Catalogue</span></a></li>";
                         echo "</li> </ul>";
-        //echo ""
                     }else{
                         echo "<ul class='menu'> <li> <a href='login.php'> Login </a>";
                         echo "</li> </ul>";

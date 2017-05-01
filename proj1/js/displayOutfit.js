@@ -4,7 +4,6 @@ $(function(){
 
     for(var i=0; i<5; i++){
         console.log($(items[i]).text());
-        // var productid = $(item).text();
         var productid = $(items[i]).text();
         $.ajax({
             url : 'http://api.shopstyle.com/api/v2/products/' + productid + '?pid=uid2009-39252003-12',

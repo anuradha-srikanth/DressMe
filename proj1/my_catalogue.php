@@ -97,12 +97,15 @@
           while($row1 = mysqli_fetch_assoc($result1)){
 
             echo  '<div class="column">';
+            echo '<div class="image-hover-wrapper"> <span class="image-hover-wrapper-banner"> </span>';
             echo '<a href="my_outfit.php?id=';
             echo $row1['outfitID'];
             echo '">';
-            echo '<img class="thumbnail" src="http://placehold.it/550x550">';
+            echo '<img class="thumbnail" src="img/catalogue_img_stock.jpg">';
+            echo '<span class="image-hover-wrapper-reveal"> <p>'. $row1['outfitID'].'<br><i class="fa fa-link" aria-hidden="true"></i></p></span>';
+            // echo '<h5>'.$row1['outfitID'].'</h5>';
             echo '</a>';
-            echo '<h5>My Site</h5>';
+            echo '</div>';
             echo '</div>';
           }
         }

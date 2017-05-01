@@ -119,7 +119,6 @@
         <span class="image-hover-wrapper-banner"> </span>
         <a href="#">
           <img class="thumbnail image" src="">
-          <!-- <img src="https://images.pexels.com/photos/163704/bike-old-wheel-two-wheeled-vehicle-163704.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"> -->
           <span class="image-hover-wrapper-reveal">
             <p>Check it<br><i class="fa fa-link" aria-hidden="true"></i></p>
           </span>

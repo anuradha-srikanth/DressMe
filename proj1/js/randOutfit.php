@@ -1,13 +1,17 @@
-
-<!-- randSubcategory.php - This file contains helper functions for search.
-                           php. This code is called from script.js using an AJAX call and the POST method to send information. This file mainly queries the daatabase to look for an outfit in the requested caategory of clothing.  It also randomizes the results so that the first category isnt returned always for similar weather conditions.
+<?php
+/*randSubcategory.php - This file contains helper functions for search.php. 
+                        This code is called from script.js using an AJAX call 
+                        and the POST method to send information. This file mainly
+                        queries the daatabase to look for an outfit in the 
+                        requested caategory of clothing.  It also randomizes 
+                        the results so that the first category isnt returned always 
+                        for similar weather conditions.
 
                            Concepts:
                            1. Database queries and results processing
                            2. Random selection
- -->
-
-
+ */
+ ?>
 
 <?php
 if(isset($_POST['subCatName'])){
